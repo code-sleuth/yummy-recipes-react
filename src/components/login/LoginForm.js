@@ -58,9 +58,6 @@ class LoginForm extends Component {
         return(
             <div>
                 <div>
-                <div className="jumbotron">
-                <h1 className="text-center">Yummy Recipes React App</h1>
-                </div>
                 <div className="container clear-top">
                 <form onSubmit={this.submitForm.bind(this)}>
                     <legend>SIGN IN</legend>
