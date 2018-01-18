@@ -94,18 +94,6 @@ class LoginForm extends Component {
                         />
                     </div>
                 </form>
-                <form onSubmit={this.onSubmitSignUp.bind(this)}>
-                    <div className="text-center form-group">
-                            <input className="btn btn-info btn-xl" 
-                            type="submit" 
-                            name="submit"
-                            value="SIGNUP"
-                            />
-                            <ul>
-                                <li><Link to="/signup">SIGNUP</Link></li>
-                            </ul>
-                    </div>
-                </form>
                 </div>
                 </div>
             </div>

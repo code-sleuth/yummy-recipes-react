@@ -10,6 +10,11 @@ class Navbar extends Component {
         this.setState({ navCollapsed: !this.state.navCollapsed })
       }
 
+      handleLogout(event){
+          localStorage.removeItem('token');
+          this.setState()
+      }
+
     render(){
         const {navCollapsed} = this.state
         return(
@@ -34,7 +39,7 @@ class Navbar extends Component {
             >
             <ul className='nav navbar-nav navbar-right'>
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/login">Login</Link></li>
+                <li><Link to="/login" onClick={this.handleLogout.bind(this)}>Logout</Link></li>
             </ul>
             </div>
         </nav>

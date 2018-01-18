@@ -8,7 +8,7 @@ const SignupPage = () => {
                     <h4 className="modal-title">SIGN UP</h4>
                 </div>
                 <div className="modal-body">
-                    <form action="/add_user" method="POST">
+                    <form>
                         <div className="input-group">
                             <span className="input-group-addon"><i className="glyphicon glyphicon-eye-open"></i></span>
                             <input type="text" name="username" placeholder="USERNAME" className="form-control" id="username" required />

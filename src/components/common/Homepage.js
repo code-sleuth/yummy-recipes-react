@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 const HomePage = () => {
   return (
     <div>
-        <h4>Yummy recipes react App</h4>
-        <p>
-            lots of details here...
-        </p>
+        <Link to="/login"><button className="btn btn-success btn-lg">LOGIN</button></Link>
+        <Link to="/signup"><button className="btn btn-success btn-lg">SIGNUP</button></Link>
+        
     </div>
   );
 };
