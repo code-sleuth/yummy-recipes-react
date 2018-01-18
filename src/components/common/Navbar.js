@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
  
 class Navbar extends Component {
     state = {
@@ -10,40 +10,48 @@ class Navbar extends Component {
         this.setState({ navCollapsed: !this.state.navCollapsed })
       }
 
-      handleLogout(event){
+      handleLogout(){
           localStorage.removeItem('token');
           this.setState()
       }
 
+      isAuthenticated(){
+          const token = localStorage.getItem('token');
+          return token && token.length > 10;
+      }
+
     render(){
+        const isAlreadyAuthenticated = this.isAuthenticated();
         const {navCollapsed} = this.state
-        return(
+        return(   
             <div>
-            <nav className='navbar navbar-default'>
-            <div className='navbar-header'>
-            <a className='navbar-brand' href='/'>Yummy Recipes</a>
-            <button
-                aria-expanded='false'
-                className='navbar-toggle collapsed'
-                onClick={this._onToggleNav}
-                type='button'
-                >
-                <span className='sr-only'>Toggle navigation</span>
-                <span className='icon-bar'></span>
-                <span className='icon-bar'></span>
-                <span className='icon-bar'></span>
-            </button>
+                { !isAlreadyAuthenticated ? <Redirect to="/login" /> :(
+                    <nav className='navbar navbar-default'>
+                        <div className='navbar-header'>
+                        <a className='navbar-brand'>Yummy Recipes</a>
+                        <button
+                            aria-expanded='false'
+                            className='navbar-toggle collapsed'
+                            onClick={this._onToggleNav}
+                            type='button'
+                            >
+                            <span className='sr-only'>Toggle navigation</span>
+                            <span className='icon-bar'></span>
+                            <span className='icon-bar'></span>
+                            <span className='icon-bar'></span>
+                        </button>
+                        </div>
+                        <div
+                        className={(navCollapsed ? 'collapse' : '') + ' navbar-collapse'}
+                        >
+                        <ul className='nav navbar-nav navbar-right'>
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/login" onClick={this.handleLogout.bind(this)}>Logout</Link></li>
+                        </ul>
+                        </div>
+                    </nav>
+                )}
             </div>
-            <div
-            className={(navCollapsed ? 'collapse' : '') + ' navbar-collapse'}
-            >
-            <ul className='nav navbar-nav navbar-right'>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/login" onClick={this.handleLogout.bind(this)}>Logout</Link></li>
-            </ul>
-            </div>
-        </nav>
-        </div>
         );
     }   
 }
