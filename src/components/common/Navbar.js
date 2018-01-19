@@ -47,6 +47,7 @@ class Navbar extends Component {
                         <ul className='nav navbar-nav navbar-right'>
                             <li><Link to="/dashboard">Dashboard</Link></li>
                             <li><Link to="/dashboard/categories">Category</Link></li>
+                            <li><Link to="/dashboard/recipes">Recipe</Link></li>
                             <li><Link to="/login" onClick={this.handleLogout.bind(this)}>Logout</Link></li>
                         </ul>
                         </div>

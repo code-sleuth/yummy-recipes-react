@@ -5,6 +5,7 @@ import Dashboard from './Dashboard';
 import SignupPage from '../login/Signup';
 import Homepage from './Homepage';
 import Category from '../categories/Category';
+import Recipe from '../recipes/Recipe';
 
 const Routes = () =>(
     <div>
@@ -14,6 +15,7 @@ const Routes = () =>(
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/signup"  component={SignupPage} />
             <Route exact path="/dashboard/categories" component={Category} /> 
+            <Route exact path="/dashboard/recipes" component={Recipe} />
         </Switch>
     </div>
 );
