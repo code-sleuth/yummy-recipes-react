@@ -35,7 +35,7 @@ class SignupPage extends Component {
 
     submitForm(event){
         event.preventDefault();
-        if (this.state.confirmpassword != this.state.password) {
+        if (this.state.confirmpassword !== this.state.password) {
             console.log("Password not the same")
             return
         } else if(this.state.password.length < 4){
@@ -49,10 +49,10 @@ class SignupPage extends Component {
             password: this.state.password,
         })
         .then(response => {
-            console.log("works", response.data)
+            alert("Response: " + response.data.message)
         })
         .catch(error => {
-            console.log("here: ", error.response)
+            alert("Error: " + error.response)
         })
         this.setState();
     }
