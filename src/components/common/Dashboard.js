@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
+import Recipes from '../recipes/Recipes';
 
 class Dashboard extends Component {
 
@@ -7,6 +8,7 @@ class Dashboard extends Component {
         return(
             <div>
                 <Navbar />
+                <Recipes />
             </div>
         );
     }
