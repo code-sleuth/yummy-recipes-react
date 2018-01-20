@@ -6,6 +6,7 @@ import SignupPage from '../login/Signup';
 import Homepage from './Homepage';
 import Category from '../categories/Category';
 import Recipe from '../recipes/Recipe';
+import User from '../user/User';
 
 const Routes = () =>(
     <div>
@@ -16,6 +17,7 @@ const Routes = () =>(
             <Route exact path="/signup"  component={SignupPage} />
             <Route exact path="/dashboard/categories" component={Category} /> 
             <Route exact path="/dashboard/recipes" component={Recipe} />
+            <Route exact path="/dashboard/user" component={User} />
         </Switch>
     </div>
 );

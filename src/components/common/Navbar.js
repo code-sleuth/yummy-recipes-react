@@ -41,13 +41,20 @@ class Navbar extends Component {
                             <span className='icon-bar'></span>
                         </button>
                         </div>
-                        <div
-                        className={(navCollapsed ? 'collapse' : '') + ' navbar-collapse'}
-                        >
+                        <div className={(navCollapsed ? 'collapse' : '') + ' navbar-collapse'}>
+                        <form className="navbar-form navbar-left">
+                            <div className="input-group center">
+                                <input type="text" className="form-control" placeholder="Search" />
+                                <span className="input-group-btn">
+                                    <button type="button" className="btn btn-default"><span className="glyphicon glyphicon-search"></span></button>
+                                </span>
+                            </div>
+                        </form>
                         <ul className='nav navbar-nav navbar-right'>
                             <li><Link to="/dashboard">Dashboard</Link></li>
                             <li><Link to="/dashboard/categories">Category</Link></li>
                             <li><Link to="/dashboard/recipes">Recipe</Link></li>
+                            <li><Link to="/dashboard/user">User</Link></li>
                             <li><Link to="/login" onClick={this.handleLogout.bind(this)}>Logout</Link></li>
                         </ul>
                         </div>
