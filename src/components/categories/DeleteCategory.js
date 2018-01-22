@@ -51,6 +51,9 @@ class DeleteCategory extends Component{
         })
     }
 
+    handleSelectChanged = (event) => {
+        this.setState({category_id: event.target.value});
+    }
 
     render(){
         if (this.state.category_array) {
@@ -69,8 +72,8 @@ class DeleteCategory extends Component{
                             <form onSubmit={this.deleteCategory}>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-plus"></i></span>
-                                    <select className="form-control" name="item" onChange={this.handleSelectChange}  value={this.state.category_id} required>
-                                        <option value="">SELECT CATEGORY TO DELETE</option>
+                                    <select className="form-control" name="item" onChange={this.handleSelectChanged}  value={this.state.category_id} required>
+                                        <option value={0}>SELECT CATEGORY TO DELETE</option>
                                         { all_the_categories }
                                     </select>
                                 </div>
