@@ -1,6 +1,5 @@
 import React, {Component}  from 'react';
 import axios from 'axios';
-import RecipeImage from '../../styles/assets/recipe.jpg';
 
 class Recipes extends Component {
     constructor(){
@@ -38,7 +37,6 @@ class Recipes extends Component {
     }
 
     render(){
-        console.log(this.state.recipes)
         if (this.state.recipes){
         const rec_ipes = this.state.recipes.map((recipes) => {
             return(
