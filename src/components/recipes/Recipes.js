@@ -7,7 +7,9 @@ class Recipes extends Component {
         this.state = {
             recipes: [
 
-            ]
+            ],
+            per_page: '',
+            pages: []
         }
     }
 
@@ -18,6 +20,8 @@ class Recipes extends Component {
             console.log(this.getAuthenticationToken())
             console.log(response.data)
             this.setState({recipes: response.data})
+            this.setState({per_page: this.state.recipes[0].per_page})
+            this.setState({pages: this.state.recipes[0]})
         })
         .catch(error => {
             console.log(error)
@@ -37,6 +41,8 @@ class Recipes extends Component {
     }
 
     render(){
+        //console.log(this.state.per_page)
+        console.log(this.state.recipes)
         if (this.state.recipes){
         const rec_ipes = this.state.recipes.map((recipes) => {
             return(
@@ -52,6 +58,12 @@ class Recipes extends Component {
                 </tbody>
             );
         });
+
+        // const pages = this.state.per_page.map(() => {
+        //     return (
+        //         <li><a href="#">{rec_ipes.per_page}</a></li>
+        //     )
+        // })
 
         return(
             <div class="container">
