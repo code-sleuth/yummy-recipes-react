@@ -5,14 +5,16 @@ class Recipes extends Component {
     constructor(){
         super();
         this.state = {
-            recipes: [
-
-            ],
+            recipes: [],
             per_page: '',
-            pages: []
+            page_number: '',
+            total_items_returned: ''
         }
     }
 
+    handleClick = (event) => {
+        this.setState({page_number: Number(event.target.id)})
+    }
 
     componentDidMount(){
         axios.get('http://127.0.0.1:5000/recipes', {headers: {Authorization: this.getAuthenticationToken()}})
@@ -21,7 +23,8 @@ class Recipes extends Component {
             console.log(response.data)
             this.setState({recipes: response.data})
             this.setState({per_page: this.state.recipes[0].per_page})
-            this.setState({pages: this.state.recipes[0]})
+            this.setState({pages: this.state.recipes[0].page_number})
+            this.setState({pages: this.state.recipes[0].total_items_returned})
         })
         .catch(error => {
             console.log(error)
@@ -59,11 +62,14 @@ class Recipes extends Component {
             );
         });
 
-        // const pages = this.state.per_page.map(() => {
-        //     return (
-        //         <li><a href="#">{rec_ipes.per_page}</a></li>
-        //     )
-        // })
+        const pages = this.state.per_page.map(() => {
+            return (
+                <li><a href="#">{rec_ipes.per_page}</a></li>
+            )
+        });
+
+        const pageNumbers = [];
+        for (let i = 1; i < Math.ceil(this.state.recipes.length /))
 
         return(
             <div class="container">
