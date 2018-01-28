@@ -7,24 +7,34 @@ class Recipes extends Component {
         this.state = {
             recipes: [],
             per_page: '',
-            page_number: '',
             total_items_returned: ''
         }
     }
 
+    pageChanged(id){
+        axios.get(`http://127.0.0.1:5000/recipes?page=${id}`, {headers: {Authorization: this.getAuthenticationToken()}})
+        .then(response => {
+            this.setState({recipes: response.data})
+        })
+        .catch(error => {
+            alert('click :' + error);
+        });
+    }
+
     handleClick = (event) => {
-        this.setState({page_number: Number(event.target.id)})
+        this.pageChanged(event.target.id)
+    }
+
+    onPageNumberChanged = (event) => {
     }
 
     componentDidMount(){
         axios.get('http://127.0.0.1:5000/recipes', {headers: {Authorization: this.getAuthenticationToken()}})
         .then(response => {
-            console.log(this.getAuthenticationToken())
-            console.log(response.data)
             this.setState({recipes: response.data})
             this.setState({per_page: this.state.recipes[0].per_page})
-            this.setState({pages: this.state.recipes[0].page_number})
-            this.setState({pages: this.state.recipes[0].total_items_returned})
+            this.setState({page_number: this.state.recipes[0].page_number})
+            this.setState({total_items_returned: this.state.recipes[0].total_items_returned})
         })
         .catch(error => {
             console.log(error)
@@ -44,8 +54,6 @@ class Recipes extends Component {
     }
 
     render(){
-        //console.log(this.state.per_page)
-        console.log(this.state.recipes)
         if (this.state.recipes){
         const rec_ipes = this.state.recipes.map((recipes) => {
             return(
@@ -62,15 +70,22 @@ class Recipes extends Component {
             );
         });
 
-        const pages = this.state.per_page.map(() => {
-            return (
-                <li><a href="#">{rec_ipes.per_page}</a></li>
-            )
-        });
-
         const pageNumbers = [];
-        for (let i = 1; i < Math.ceil(this.state.recipes.length /))
+        if(this.state.total_items_returned > 4){
+            for (let i = 1; i <= Math.ceil(this.state.total_items_returned / this.state.per_page); i++) {
+                pageNumbers.push(i);
+            }
+        } else {
+            pageNumbers.push(1);
+        }
 
+
+        const pages = pageNumbers.map((number) => {
+            return(
+                <li><a onClick={this.handleClick} key={number} id={number}>{number}</a></li>
+            );
+        });
+        console.log(pageNumbers);
         return(
             <div class="container">
                 <h2>Recipes</h2>
@@ -90,11 +105,7 @@ class Recipes extends Component {
                 </table>
                 <div class="text-center">
                         <ul class="pagination">
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
+                            {pages}
                         </ul>
                 </div>
             </div>
