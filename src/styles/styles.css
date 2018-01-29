@@ -80,3 +80,13 @@ body{
     border-radius: 10px;
     width:50%;    
 }
+
+.search-bar {
+    margin: 20px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.search-bar input {
+    width: 80%;
+}
