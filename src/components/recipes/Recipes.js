@@ -7,7 +7,8 @@ class Recipes extends Component {
         this.state = {
             recipes: [],
             per_page: '',
-            total_items_returned: ''
+            total_items_returned: '',
+            term: ''
         }
     }
 
@@ -33,7 +34,6 @@ class Recipes extends Component {
         .then(response => {
             this.setState({recipes: response.data})
             this.setState({per_page: this.state.recipes[0].per_page})
-            this.setState({page_number: this.state.recipes[0].page_number})
             this.setState({total_items_returned: this.state.recipes[0].total_items_returned})
         })
         .catch(error => {
@@ -51,6 +51,16 @@ class Recipes extends Component {
     handleError(){
         localStorage.removeItem('token')
         window.location.reload();
+    }
+
+    OnInputChange = (event) => {
+        axios.get(`http://127.0.0.1:5000/recipes/search?q=${event.target.value}`, {headers: {Authorization: this.getAuthenticationToken()}})
+        .then(response => {
+            this.setState({recipes: response.data});
+        })
+        .catch(error => {
+            alert('error on search: ' + error);
+        });
     }
 
     render(){
@@ -85,11 +95,13 @@ class Recipes extends Component {
                 <li><a onClick={this.handleClick} key={number} id={number}>{number}</a></li>
             );
         });
-        console.log(pageNumbers);
+        
         return(
             <div class="container">
                 <h2>Recipes</h2>
-                <p>A list of all created Recipes</p>                              
+                <div className="search-bar">
+                <input onChange={this.OnInputChange}/>
+                </div>                             
                 <table class="table table-hover">
                     <thead>
                     <tr>
