@@ -42,14 +42,6 @@ class Navbar extends Component {
                         </button>
                         </div>
                         <div className={(navCollapsed ? 'collapse' : '') + ' navbar-collapse'}>
-                        <form className="navbar-form navbar-left">
-                            <div className="input-group center">
-                                <input type="text" className="form-control" placeholder="Search" />
-                                <span className="input-group-btn">
-                                    <button type="button" className="btn btn-default"><span className="glyphicon glyphicon-search"></span></button>
-                                </span>
-                            </div>
-                        </form>
                         <ul className='nav navbar-nav navbar-right'>
                             <li><Link to="/dashboard">Dashboard</Link></li>
                             <li><Link to="/dashboard/categories">Category</Link></li>
