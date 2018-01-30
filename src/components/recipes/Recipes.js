@@ -8,7 +8,8 @@ class Recipes extends Component {
             recipes: [],
             per_page: '',
             total_items_returned: '',
-            term: ''
+            term: '',
+            fail_safe: []
         }
     }
 
@@ -30,9 +31,14 @@ class Recipes extends Component {
     }
 
     componentDidMount(){
+        this.default();
+    }
+
+    default(){
         axios.get('http://127.0.0.1:5000/recipes', {headers: {Authorization: this.getAuthenticationToken()}})
         .then(response => {
             this.setState({recipes: response.data})
+            this.setState({fail_safe: response.data})
             this.setState({per_page: this.state.recipes[0].per_page})
             this.setState({total_items_returned: this.state.recipes[0].total_items_returned})
         })
@@ -51,20 +57,29 @@ class Recipes extends Component {
     handleError(){
         localStorage.removeItem('token')
         window.location.reload();
+        alert('here')
     }
 
     OnInputChange = (event) => {
+        if(!event.target.value){
+            this.default()
+            return
+        } 
         axios.get(`http://127.0.0.1:5000/recipes/search?q=${event.target.value}`, {headers: {Authorization: this.getAuthenticationToken()}})
         .then(response => {
-            this.setState({recipes: response.data});
+            this.setState({recipes: response.data})
+            this.setState({per_page: this.state.recipes[0].per_page})
+            this.setState({total_items_returned: this.state.recipes[0].total_items_returned})
         })
         .catch(error => {
-            alert('error on search: ' + error);
+            this.setState({recipes: []})
+            alert('Search item does not exist');
+            this.default()
         });
     }
 
     render(){
-        if (this.state.recipes){
+        if (this.state.recipes.length > 0){
         const rec_ipes = this.state.recipes.map((recipes) => {
             return(
                 <tbody>
@@ -100,7 +115,7 @@ class Recipes extends Component {
             <div class="container">
                 <h2>Recipes</h2>
                 <div className="search-bar">
-                <input onChange={this.OnInputChange}/>
+                <input onChange={this.OnInputChange} />
                 </div>                             
                 <table class="table table-hover">
                     <thead>
@@ -122,6 +137,10 @@ class Recipes extends Component {
                 </div>
             </div>
         );
+    } else {
+        return(
+            <p> User has no Recipes or No resultset from search</p>
+        )
     }
     }
 }
