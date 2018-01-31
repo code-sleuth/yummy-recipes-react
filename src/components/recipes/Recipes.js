@@ -82,7 +82,7 @@ class Recipes extends Component {
         if (this.state.recipes.length > 0){
         const rec_ipes = this.state.recipes.map((recipes) => {
             return(
-                <tbody>
+                <tbody key={recipes.id}>
                 <tr>
                     <td>{recipes.category_id}</td>
                     <td>{recipes.name}</td>
@@ -107,17 +107,17 @@ class Recipes extends Component {
 
         const pages = pageNumbers.map((number) => {
             return(
-                <li><a onClick={this.handleClick} key={number} id={number}>{number}</a></li>
+                <li key={number}><a onClick={this.handleClick} key={number} id={number}>{number}</a></li>
             );
         });
         
         return(
-            <div class="container">
+            <div className="container">
                 <h2>Recipes</h2>
                 <div className="search-bar">
                 <input onChange={this.OnInputChange} />
                 </div>                             
-                <table class="table table-hover">
+                <table className="table table-hover">
                     <thead>
                     <tr>
                         <th>Category Name</th>
@@ -130,8 +130,8 @@ class Recipes extends Component {
                     </thead>
                     { rec_ipes }
                 </table>
-                <div class="text-center">
-                        <ul class="pagination">
+                <div className="text-center">
+                        <ul className="pagination">
                             {pages}
                         </ul>
                 </div>
