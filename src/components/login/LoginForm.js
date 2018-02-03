@@ -1,27 +1,36 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
 import axios from 'axios';
+import {BASE_URL, LOGIN_URL, Authenticated} from '../../utils/Constants';
 
 class LoginForm extends Component {
     constructor(){
         super();
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            Auth: ''
         }
     }
 
-    handleUsernameChanged(event) {
+    handleUsernameChanged = (event) => {
         this.setState({username: event.target.value});
         
     }
 
-    handlePasswordChanged(event) {
+    handlePasswordChanged = (event) => {
         this.setState({password: event.target.value});
     }
 
-    submitForm(event){
+    componentDidMount(){
+        this.setState({Auth: Authenticated})
+    }
+
+    
+
+    submitForm = (event) => {
         event.preventDefault();
-        axios.post('http://127.0.0.1:5000/auth/login', {
+        axios.post(BASE_URL + LOGIN_URL, {
             username: this.state.username,
             password: this.state.password
           })
@@ -35,30 +44,20 @@ class LoginForm extends Component {
             localStorage.setItem('errorMessage', error.response.data.message);
             window.location.reload()
           });
-          this.props.onSuccessfulLogin();
     }
 
-    onSubmitSignUp(event){
+    onSubmitSignUp = (event) => {
         event.preventDefault()
         this.setState()
-    }
-
-    isAuthenticated() {
-        const token = localStorage.getItem('token');
-        return token && token.length > 10;
-    }
-
-    getErrorMessage() {
-        const errorMessage = localStorage.getItem('errorMessage');
-        return errorMessage;
     }
     
     render(){
         return(
             <div>
+                { this.state.Auth ? <Redirect to={{pathname: '/dashboard'}}/> : (
                 <div>
                 <div className="container clear-top">
-                <form onSubmit={this.submitForm.bind(this)}>
+                <form onSubmit={this.submitForm}>
                     <legend>SIGN IN</legend>
                     <div className="input-group">
                         <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
@@ -67,7 +66,7 @@ class LoginForm extends Component {
                         id="username" 
                         placeholder="USERNAME"  
                         value={this.state.username}
-                        onChange={this.handleUsernameChanged.bind(this)}
+                        onChange={this.handleUsernameChanged}
                         required />
                     </div>
                     <div className="input-group">
@@ -78,7 +77,7 @@ class LoginForm extends Component {
                         id="password" 
                         placeholder="PASSWORD"
                         value={this.state.password}
-                        onChange={this.handlePasswordChanged.bind(this)}
+                        onChange={this.handlePasswordChanged}
                         required />
                     </div>
                     <br />
@@ -95,6 +94,7 @@ class LoginForm extends Component {
                 </form>
                 </div>
                 </div>
+                )}
             </div>
         );
     }
