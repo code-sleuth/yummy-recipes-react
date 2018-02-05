@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 import {BASE_URL, LOGIN_URL, Authenticated} from '../../utils/Constants';
+import Link from 'react-router-dom/Link';
 
 class LoginForm extends Component {
     constructor(){
@@ -54,7 +55,7 @@ class LoginForm extends Component {
     render(){
         return(
             <div>
-                { this.state.Auth ? <Redirect to={{pathname: '/dashboard'}}/> : (
+                { this.state.Auth ? <Redirect to={{pathname: '/categories'}}/> : (
                 <div>
                 <div className="container clear-top">
                 <form onSubmit={this.submitForm}>
@@ -92,6 +93,10 @@ class LoginForm extends Component {
                         />
                     </div>
                 </form>
+                <br />
+                    <div className="text-center form-group">
+                        <Link to='/signup'>SIGNUP</Link>
+                    </div>
                 </div>
                 </div>
                 )}
