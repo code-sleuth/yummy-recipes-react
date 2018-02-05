@@ -66,20 +66,14 @@ body{
   .thumbnail {
     padding:0;
 }  
-  .caption {
+.caption {
     background-color: lightgoldenrodyellow;
-  }
-
-  .jumbotron {
-      margin-bottom: 10px !important;
-  }
-
-  .btn-xl {
-    padding: 10px 20px;
-    font-size: 20px;
-    border-radius: 10px;
-    width:50%;    
 }
+
+.jumbotron {
+    margin-bottom: 10px !important;
+}
+
 
 .search-bar {
     margin: 20px;
@@ -88,5 +82,13 @@ body{
 }
 
 .search-bar input {
-    width: 80%;
+    width: 100%;
 }
+
+.table th {
+    text-align: center;   
+ }
+
+ .table td {
+    text-align: center;   
+ }
