@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {AuthToken, BASE_URL} from '../../utils/Constants';
 
 class AddCategory extends Component{
     constructor(){
@@ -9,27 +10,18 @@ class AddCategory extends Component{
         }
     }
 
-    getAccessToken(){
-        return localStorage.getItem('token');
-    }
-    
-    handleCategoryNameChanged = (event) => {
-        this.setState({category: event.target.value})
-    }
-
     submitAddCategoryForm = (event) => {
         event.preventDefault();
-        axios.post('http://127.0.0.1:5000/categories', {
+        axios.post(BASE_URL+'categories', {
             name: this.state.category,
-        }, {headers: {Authorization: this.getAccessToken()}})
+        }, {headers: {Authorization: AuthToken}})
         .then(response => {
             alert('Response: Category ' + response.statusText);
-            this.reloadPage();
+            this.props.history.push('/categories')
         })
         .catch(error => {
             if (!error.response.status){
-                this.handleLogout();
-                this.reloadPage();
+                alert('no status code')
             }
             else if (error.response.status === 409){
                 alert('Duplicate Category Name');
@@ -40,9 +32,8 @@ class AddCategory extends Component{
         this.reloadPage();
     }
 
-    handleLogout(){
-        localStorage.removeItem('token');
-        this.setState();
+    handleCategoryNameChanged = (event) => {
+        this.setState({category: event.target.value})
     }
 
     reloadPage(){
