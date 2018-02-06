@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {AuthToken, BASE_URL} from '../../utils/Constants';
+import Navbar from '../common/Navbar';
 
 class AddCategory extends Component{
     constructor(){
@@ -45,6 +46,7 @@ class AddCategory extends Component{
         return(
             /* ADD CATEGORY */
             <div className="modal-dialog">
+                <Navbar />
                 <div className="modal-content">
                     <div className="modal-header">
                         <h4 className="modal-title">YUMMY RECIPES: Add Category</h4>
