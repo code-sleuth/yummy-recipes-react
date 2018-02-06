@@ -162,9 +162,9 @@ class Category extends Component {
                     { cat }
                 </table>
                 <div className="text-center">
-                        <ul className="pagination">
-                            {pages}
-                        </ul>
+                    <ul className="pagination">
+                        {pages}
+                    </ul>
                 </div>
             </div>
             </div>
