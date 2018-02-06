@@ -50,6 +50,7 @@ class SignupPage extends Component {
         })
         .then(response => {
             alert("Response: " + response.data.message)
+            this.props.history.push('/login')
         })
         .catch(error => {
             alert("Error: " + error.response)
