@@ -1,25 +1,27 @@
 import React, {Component}  from 'react';
 import axios from 'axios';
+import {BASE_URL, AuthToken} from '../../utils/Constants';
+import {Redirect, withRouter} from 'react-router-dom';
 
 class Recipes extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             recipes: [],
             per_page: '',
             total_items_returned: '',
             term: '',
-            fail_safe: []
+            id: this.props.id
         }
     }
 
     pageChanged(id){
-        axios.get(`http://127.0.0.1:5000/recipes?page=${id}`, {headers: {Authorization: this.getAuthenticationToken()}})
+        axios.get(`${BASE_URL}categories/recipes/${this.state.id}?page=${id}`, {headers: {Authorization: AuthToken}})
         .then(response => {
             this.setState({recipes: response.data})
         })
         .catch(error => {
-            alert('click :' + error);
+            console.log(error)
         });
     }
 
@@ -27,18 +29,14 @@ class Recipes extends Component {
         this.pageChanged(event.target.id)
     }
 
-    onPageNumberChanged = (event) => {
-    }
-
     componentDidMount(){
         this.default();
     }
 
     default(){
-        axios.get('http://127.0.0.1:5000/recipes', {headers: {Authorization: this.getAuthenticationToken()}})
+        axios.get(`${BASE_URL}categories/recipes/${this.state.id}`, {headers: {Authorization: AuthToken}})
         .then(response => {
             this.setState({recipes: response.data})
-            this.setState({fail_safe: response.data})
             this.setState({per_page: this.state.recipes[0].per_page})
             this.setState({total_items_returned: this.state.recipes[0].total_items_returned})
         })
@@ -50,14 +48,11 @@ class Recipes extends Component {
         });
     }
 
-    getAuthenticationToken(){
-        return localStorage.getItem('token');
-    }
-
     handleError(){
-        localStorage.removeItem('token')
-        window.location.reload();
-        alert('here')
+        //localStorage.removeItem('token')
+        //window.location.reload();
+        //alert('here from recs')
+
     }
 
     OnInputChange = (event) => {
@@ -65,7 +60,7 @@ class Recipes extends Component {
             this.default()
             return
         } 
-        axios.get(`http://127.0.0.1:5000/recipes/search?q=${event.target.value}`, {headers: {Authorization: this.getAuthenticationToken()}})
+        axios.get(`${BASE_URL}categories/recipes/search/${this.state.id}?q=${event.target.value}`, {headers: {Authorization: AuthToken}})
         .then(response => {
             this.setState({recipes: response.data})
             this.setState({per_page: this.state.recipes[0].per_page})
@@ -78,18 +73,40 @@ class Recipes extends Component {
         });
     }
 
+    addClicked = (event) => {
+        event.preventDefault();
+        this.props.history.push('/add_recipe');
+    }
+
+    editClicked = (event) => {
+        this.props.history.push('/edit_recipe/'+event.target.id);
+    }
+
+    deleteClicked = (event) => {
+        event.preventDefault();
+        axios.delete(`${BASE_URL}recipes/${event.target.id}`, {headers: {Authorization: AuthToken}})
+        .then(response => {
+            alert('Recipe Deleted');
+            this.setState()
+        })
+        .catch(error => {
+            alert('Delete recipe error: ' + error);
+        })
+    }
+
     render(){
         if (this.state.recipes.length > 0){
         const rec_ipes = this.state.recipes.map((recipes) => {
             return(
                 <tbody key={recipes.id}>
                 <tr>
-                    <td>{recipes.category_id}</td>
                     <td>{recipes.name}</td>
                     <td>{recipes.details}</td>
                     <td>{recipes.ingredients}</td>
                     <td>{recipes.date_created}</td>
                     <td>{recipes.date_modified}</td>
+                    <td><input type="submit" className="btn btn-info" value="Edit" id={recipes.id} onClick={this.editClicked}/></td>
+                    <td><input type="submit" className="btn btn-danger" value="Delete" id={recipes.id} onClick={this.deleteClicked}/></td>
                 </tr>
                 </tbody>
             );
@@ -114,18 +131,22 @@ class Recipes extends Component {
         return(
             <div className="container">
                 <h2>Recipes</h2>
+                <div>
+                    <input type="submit" value="ADD" className="btn btn-warning" onClick={this.addClicked} />
+                </div>
                 <div className="search-bar">
                 <input onChange={this.OnInputChange} />
                 </div>                             
                 <table className="table table-hover">
                     <thead>
                     <tr>
-                        <th>Category Name</th>
                         <th>Recipe Name</th>
                         <th>Details</th>
                         <th>Ingredients</th>
                         <th>Date Created</th>
                         <th>Last Edited</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                     </thead>
                     { rec_ipes }
@@ -139,10 +160,14 @@ class Recipes extends Component {
         );
     } else {
         return(
-            <p> User has no Recipes or No resultset from search</p>
-        )
+            <div className="container">
+                <p className="text-center"> User has no Recipes for this Category</p>
+                <input type="submit" value="ADD" className="center-block btn-warning btn-lg" onClick={this.addClicked} />
+            </div>
+        )   
     }
     }
 }
+Recipes = withRouter(Recipes);
 
 export default Recipes;
