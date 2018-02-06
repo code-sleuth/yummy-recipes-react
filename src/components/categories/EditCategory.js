@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import {BASE_URL, AuthToken} from '../../utils/Constants';
+import Navbar from '../common/Navbar';
 
 class EditCategory extends Component {
     constructor(){
@@ -61,6 +62,8 @@ class EditCategory extends Component {
         console.log(this.state.edit_category_array)
                 /* EDIT CATEGORY */
         return(
+            <div>
+                <Navbar />
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -90,6 +93,7 @@ class EditCategory extends Component {
                     </div>
                 </div>
             </div>
+        </div>
         );
     }
 }
