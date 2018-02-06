@@ -12,7 +12,7 @@ class Navbar extends Component {
 
       handleLogout = (event) => {
           localStorage.removeItem('token');
-          window.location.reload()
+          this.props.history.push('/login')
       }
 
     render(){
@@ -35,10 +35,8 @@ class Navbar extends Component {
                 </div>
                 <div className={(navCollapsed ? 'collapse' : '') + ' navbar-collapse'}>
                 <ul className='nav navbar-nav navbar-right'>
-                    <li><Link to="/dashboard">Dashboard</Link></li>
-                    <li><Link to="/dashboard/categories">Category</Link></li>
-                    <li><Link to="/dashboard/recipes">Recipe</Link></li>
-                    <li><Link to="/dashboard/user">User</Link></li>
+                    <li><Link to="/categories">Categories</Link></li>
+                    <li><Link to="/user">User</Link></li>
                     <li><Link to="/login" onClick={this.handleLogout}>Logout</Link></li>
                 </ul>
                 </div>
