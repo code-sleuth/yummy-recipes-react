@@ -8,7 +8,7 @@ class Dashboard extends Component {
         return(
             <div>
                 <Navbar />
-                <Recipes />
+                <Recipes id={this.props.match.params.id}/>
             </div>
         );
     }
