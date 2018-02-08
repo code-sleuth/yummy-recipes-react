@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import {BASE_URL} from '../../utils/Constants';
 
+// This component handles user signup
 class SignupPage extends Component {
     constructor(){
         super();
@@ -12,41 +14,43 @@ class SignupPage extends Component {
             confirmpassword: ""
         }
     }
-
-    handleUsernameChanged(event){
+    // These functions handle user input
+    handleUsernameChanged = (event) =>{
         this.setState({username: event.target.value});
     }
 
-    handleFullnameChanged(event){
+    handleFullnameChanged = (event) =>{
         this.setState({fullname: event.target.value})
     }
 
-    handleEmailChanged(event){
+    handleEmailChanged = (event) =>{
         this.setState({email: event.target.value});
     }
 
-    handlePasswordChanged(event){
+    handlePasswordChanged = (event) =>{
         this.setState({password: event.target.value});
     }
 
-    handleConfirmPasswordChanged(event){
+    handleConfirmPasswordChanged = (event) => {
         this.setState({confirmpassword: event.target.value});
     }
 
-    submitForm(event){
+    // function to submit form data
+    submitForm = (event) => {
         event.preventDefault();
-        if (this.state.confirmpassword !== this.state.password) {
-            console.log("Password not the same")
+        const {username, fullname, email, confirmpassword, password} = this.state;
+        if (confirmpassword !== password) {
+            alert("Password not the same")
             return
-        } else if(this.state.password.length < 4){
-            console.log("Password too short")
+        } else if(password.length < 4){
+            alert("Password too short")
             return
         }
         axios.post('http://127.0.0.1:5000/auth/register', {
-            username: this.state.username,
-            fullname: this.state.fullname,
-            email: this.state.email,
-            password: this.state.password,
+            username: username,
+            fullname: fullname,
+            email: email,
+            password: password,
         })
         .then(response => {
             alert("Response: " + response.data.message)
@@ -78,7 +82,6 @@ class SignupPage extends Component {
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
                                 <input type="text" name="fullname" placeholder="FULLNAME" className="form-control"
-                                 value={this.state.fullname}
                                  onChange={this.handleFullnameChanged.bind(this)}
                                  required
                                 />
@@ -86,24 +89,21 @@ class SignupPage extends Component {
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-envelope"></i></span>
                                 <input type="email" name="email" placeholder="EMAIL" className="form-control"
-                                 value={this.state.email}
-                                 onChange={this.handleEmailChanged.bind(this)}
+                                 onChange={this.handleEmailChanged}
                                  required
                                 />
                             </div>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-lock"></i></span>
                                 <input type="password" name="password" placeholder="PASSWORD" className="form-control"
-                                 value={this.state.password}
-                                 onChange={this.handlePasswordChanged.bind(this)}
+                                 onChange={this.handlePasswordChanged}
                                  required
                                 />
                             </div>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-lock"></i></span>
                                 <input type="password" name="confirmpassword" placeholder="CONFIRM PASSWORD" className="form-control"
-                                 value={this.state.confirmpassword}
-                                 onChange={this.handleConfirmPasswordChanged.bind(this)}
+                                 onChange={this.handleConfirmPasswordChanged}
                                  required
                                 />
                             </div>
