@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import {BASE_URL, AuthToken} from '../../utils/Constants';
 import Navbar from '../common/Navbar';
+import { get } from 'http';
+import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from 'constants';
 
 class EditCategory extends Component {
     constructor(){
@@ -13,9 +15,11 @@ class EditCategory extends Component {
         }
     }
 
+    // Function called to update
     updateCategory = (event) => {
         event.preventDefault();
-        axios.put(`${BASE_URL}categories/${this.getCategoryId()}`, {name: this.state.category}, 
+        const {category} = this.state;
+        axios.put(`${BASE_URL}categories/${this.getCategoryId()}`, {name: category}, 
         {headers: {Authorization: AuthToken}})
         .then(response => {
             alert('Success '+ response.data.message);
@@ -36,19 +40,8 @@ class EditCategory extends Component {
             this.setState({edit_category_array: response.data})
         })
         .catch(error => {
-            if (!error.response.status){
-                this.handleLogout();
-                this.reloadPage();
-            } else if (error.response.status === 409){
-                alert('Duplicate Category Name');
-            } else {
-                alert('Alert ' + alert.response.status)
-            }
+            //console.log(error)
         });
-    }
-
-    reloadPage(){
-        window.location.reload();
     }
 
     handleCategroyEdited = (event) => {
@@ -59,8 +52,8 @@ class EditCategory extends Component {
         this.setState({category_id: event.target.value});
     }
     render(){
-        console.log(this.state.edit_category_array)
                 /* EDIT CATEGORY */
+        const {edit_category_array, category_id} = this.state;
         return(
             <div>
                 <Navbar />
@@ -73,8 +66,8 @@ class EditCategory extends Component {
                         <form onSubmit={this.updateCategory}>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-plus"></i></span>                                        
-                                <select className="form-control" name="select_item" onChange={this.handleSelectChanged} value={this.state.category_id}  required>
-                                    <option value={0}>{this.state.edit_category_array.name}</option>      
+                                <select className="form-control" name="select_item" onChange={this.handleSelectChanged} value={category_id}  required>
+                                    <option value={0}>{edit_category_array.name}</option>      
                                 </select>
                             </div>
                             <div className="input-group">
