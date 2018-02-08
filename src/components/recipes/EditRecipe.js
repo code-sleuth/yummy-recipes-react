@@ -48,11 +48,12 @@ class EditRecipe extends Component{
 
     handleSubmit = (event) => {
         event.preventDefault();
+        const {category_id, name, details, ingredients} = this.state
         axios.put(`${BASE_URL}recipes/${this.getId()}`, {
-            category_id: this.state.category_id,
-            name: this.state.name,
-            details: this.state.details,
-            ingredients: this.state.ingredients
+            category_id: category_id,
+            name: name,
+            details: details,
+            ingredients: ingredients
         },
         {headers: {Authorization: AuthToken}})
         .then(response => {
@@ -69,6 +70,7 @@ class EditRecipe extends Component{
     }
 
     render(){
+        const {recipe_array} = this.state;
             return(
                 <div>
                     <Navbar />
@@ -81,19 +83,19 @@ class EditRecipe extends Component{
                             <form onSubmit={this.handleSubmit} >
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-pencil"></i></span>
-                                    <input type="text" placeholder={"OLD RECIPE NAME: "+this.state.recipe_array.name} className="form-control" id="recipe_name"
+                                    <input type="text" placeholder={"OLD RECIPE NAME: "+recipe_array.name} className="form-control" id="recipe_name"
                                     onChange={this.handleRecipeNameChanged}
                                     required />
                                 </div>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-list-alt"></i></span>
-                                    <textarea type="text" name="new_description" placeholder={"OLD DETAILS: "+this.state.recipe_array.details} className="form-control"
+                                    <textarea type="text" name="new_description" placeholder={"OLD DETAILS: "+recipe_array.details} className="form-control"
                                     onChange={this.handleRecipeDetailsChanged}
                                     required></textarea>
                                 </div>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-glass"></i></span>
-                                    <textarea type="text" name="new_ingredients" placeholder={"OLD INGREDIENTS: "+this.state.recipe_array.ingredients} className="form-control"
+                                    <textarea type="text" name="new_ingredients" placeholder={"OLD INGREDIENTS: "+recipe_array.ingredients} className="form-control"
                                     onChange={this.handleRecipeIngredientsChanged}
                                     required></textarea>
                                 </div>
