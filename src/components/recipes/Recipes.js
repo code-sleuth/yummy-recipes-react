@@ -15,8 +15,9 @@ class Recipes extends Component {
         }
     }
 
-    pageChanged(id){
-        axios.get(`${BASE_URL}categories/recipes/${this.state.id}?page=${id}`, {headers: {Authorization: AuthToken}})
+    pageChanged(page_id){
+        const {id} = this.state;
+        axios.get(`${BASE_URL}categories/recipes/${id}?page=${page_id}`, {headers: {Authorization: AuthToken}})
         .then(response => {
             this.setState({recipes: response.data})
         })
@@ -37,22 +38,13 @@ class Recipes extends Component {
         axios.get(`${BASE_URL}categories/recipes/${this.state.id}`, {headers: {Authorization: AuthToken}})
         .then(response => {
             this.setState({recipes: response.data})
-            this.setState({per_page: this.state.recipes[0].per_page})
-            this.setState({total_items_returned: this.state.recipes[0].total_items_returned})
+            const {recipes} = this.state;
+            this.setState({per_page: recipes[0].per_page})
+            this.setState({total_items_returned: recipes[0].total_items_returned})
         })
         .catch(error => {
             console.log(error)
-            if (error){
-                this.handleError();
-            }
         });
-    }
-
-    handleError(){
-        //localStorage.removeItem('token')
-        //window.location.reload();
-        //alert('here from recs')
-
     }
 
     OnInputChange = (event) => {
@@ -60,11 +52,12 @@ class Recipes extends Component {
             this.default()
             return
         } 
-        axios.get(`${BASE_URL}categories/recipes/search/${this.state.id}?q=${event.target.value}`, {headers: {Authorization: AuthToken}})
+        const {id, recipes} = this.state;
+        axios.get(`${BASE_URL}categories/recipes/search/${id}?q=${event.target.value}`, {headers: {Authorization: AuthToken}})
         .then(response => {
             this.setState({recipes: response.data})
-            this.setState({per_page: this.state.recipes[0].per_page})
-            this.setState({total_items_returned: this.state.recipes[0].total_items_returned})
+            this.setState({per_page: recipes[0].per_page})
+            this.setState({total_items_returned: recipes[0].total_items_returned})
         })
         .catch(error => {
             this.setState({recipes: []})
@@ -74,8 +67,7 @@ class Recipes extends Component {
     }
 
     addClicked = (event) => {
-        event.preventDefault();
-        this.props.history.push('/add_recipe');
+        this.props.history.push('/add_recipe/'+this.state.id);
     }
 
     editClicked = (event) => {
@@ -87,7 +79,7 @@ class Recipes extends Component {
         axios.delete(`${BASE_URL}recipes/${event.target.id}`, {headers: {Authorization: AuthToken}})
         .then(response => {
             alert('Recipe Deleted');
-            this.setState()
+            this.default()
         })
         .catch(error => {
             alert('Delete recipe error: ' + error);
@@ -95,8 +87,9 @@ class Recipes extends Component {
     }
 
     render(){
-        if (this.state.recipes.length > 0){
-        const rec_ipes = this.state.recipes.map((recipes) => {
+        const {recipes, per_page, total_items_returned, id} = this.state;
+        if (recipes.length > 0){
+        const rec_ipes = recipes.map((recipes) => {
             return(
                 <tbody key={recipes.id}>
                 <tr>
@@ -113,8 +106,8 @@ class Recipes extends Component {
         });
 
         const pageNumbers = [];
-        if(this.state.total_items_returned > 4){
-            for (let i = 1; i <= Math.ceil(this.state.total_items_returned / this.state.per_page); i++) {
+        if(total_items_returned > 5){
+            for (let i = 1; i <= Math.ceil(total_items_returned / per_page); i++) {
                 pageNumbers.push(i);
             }
         } else {
@@ -127,7 +120,6 @@ class Recipes extends Component {
                 <li key={number}><a onClick={this.handleClick} key={number} id={number}>{number}</a></li>
             );
         });
-        
         return(
             <div className="container">
                 <h2>Recipes</h2>
@@ -162,7 +154,7 @@ class Recipes extends Component {
         return(
             <div className="container">
                 <p className="text-center"> User has no Recipes for this Category</p>
-                <input type="submit" value="ADD" className="center-block btn-warning btn-lg" onClick={this.addClicked} />
+                <input type="submit" value="ADD" className="center-block btn-warning btn-lg" onClick={this.addClicked}/>
             </div>
         )   
     }
