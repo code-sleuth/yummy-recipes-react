@@ -3,7 +3,6 @@ import {Switch, Route} from 'react-router-dom';
 import LoginForm from '../login/LoginForm'; 
 import Dashboard from './Dashboard';
 import SignupPage from '../login/Signup';
-import Homepage from './Homepage';
 import Category from '../categories/Category';
 import User from '../user/User';
 import PrivateRoute from '../../utils/PrivateRoute';
@@ -15,11 +14,11 @@ import AddRecipe from '../recipes/AddRecipe';
 const Routes = () =>(
     <div>
         <Switch>
-            <Route exact path="/" component={Homepage} />
+            {/* <Route exact path="/" component={Homepage} /> */}
             <Route exact path="/login"  component={LoginForm} />
             <Route exact path="/signup"  component={SignupPage} />
             <PrivateRoute path="/recipe/:id" component={Dashboard} />
-            <PrivateRoute path="/add_recipe" component={AddRecipe} />
+            <PrivateRoute path="/add_recipe/:id" component={AddRecipe} />
             <PrivateRoute path="/edit_recipe/:id" component={EditRecipe} />
             <PrivateRoute path="/categories" component={Category} /> 
             <PrivateRoute path="/edit_categories/:id" component={EditCategory} /> 
