@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Navbar from '../common/Navbar';
+import {BASE_URL, AuthToken} from '../../utils/Constants';
 
 class User extends Component {
     constructor(){
@@ -15,18 +16,18 @@ class User extends Component {
         }
     }
 
-    getAccessToken(){
-        return localStorage.getItem('token');
-    }
-
-    componentDidMount(){
-        axios.get('http://127.0.0.1:5000/users/info', {headers: {Authorization: this.getAccessToken()}})
+    default(){
+        axios.get(BASE_URL+'users/info', {headers: {Authorization: AuthToken}})
         .then(response => {
             this.setState({user_details_array: response.data});
         })
         .catch(error => {
             alert('user error: ' + error);
         })
+    }
+
+    componentDidMount(){
+        this.default()
     }
 
     handleFullnameChanged = (event) => {
@@ -44,17 +45,18 @@ class User extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        axios.put(`http://127.0.0.1:5000/users/${this.state.user_details_array.id}`, {
-            username: this.state.username,
-            fullname: this.state.fullname,
-            email: this.state.event,
-            old_password: this.state.old_password,
-            new_password: this.state.new_password
+        const {username, fullname, email, old_password, new_password, user_details_array} = this.state;
+        axios.put(`${BASE_URL}users/${user_details_array.id}`, {
+            username: username,
+            fullname: fullname,
+            email: email,
+            old_password: old_password,
+            new_password: new_password
         },
-        {headers: {Authorization: this.getAccessToken()}})
+        {headers: {Authorization: AuthToken}})
         .then(response =>{
             alert('Successfully updated')
-            window.location.reload();
+            this.default()
         })
         .catch(error => {
             alert('edit user error: ' + error)
@@ -64,7 +66,7 @@ class User extends Component {
 
 
     render(){
-        console.log(this.state.user_details_array)
+        const {user_details_array} = this.state;
         return(
             <div>
             <Navbar />
@@ -77,7 +79,7 @@ class User extends Component {
                             <form onSubmit={this.handleSubmit}>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
-                                    <input type="text" name="fullname" placeholder={this.state.user_details_array.fullname + " " + "[FULLNAME]"} className="form-control"
+                                    <input type="text" name="fullname" placeholder={user_details_array.fullname + " " + "[FULLNAME]"} className="form-control"
                                     onChange={this.handleFullnameChanged}
                                     required/>
                                 </div>
