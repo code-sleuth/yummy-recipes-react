@@ -11,7 +11,8 @@ class AddRecipe extends Component{
             name: '',
             details: '',
             ingredients: '',
-            category_id: ''
+            category_id: '',
+            id: this.props.id
         }
     }
 
@@ -20,9 +21,10 @@ class AddRecipe extends Component{
     }
 
     componentDidMount(){
-        axios.get(BASE_URL+'categories/combo', {headers: {Authorization: AuthToken}})
+        axios.get(`${BASE_URL}categories/${this.getRecipeId()}`, {headers: {Authorization: AuthToken}})
         .then(response => {
             this.setState({category_array: response.data})
+            this.setState({category_id: this.state.category_array.id})
         })
         .catch(error => {
             alert(error)
@@ -31,20 +33,18 @@ class AddRecipe extends Component{
 
     handleSubmit = (event) => {
         event.preventDefault();
+        const { category_id, name, details, ingredients} = this.state;
         axios.post(BASE_URL+'recipes',
          {
-            category_id: this.state.category_id,
-            name: this.state.name,
-            details: this.state.details,
-            ingredients: this.state.ingredients,
-            created_by: this.state.created_by
+            category_id: category_id,
+            name: name,
+            details: details,
+            ingredients: ingredients
         },
         {headers: {Authorization: AuthToken}})
         .then(response => {
-            console.log('The idea is:' + this.getRecipeId())
             alert('Successfully Added Recipe ', this.getRecipeId())
-            this.setState()
-            this.props.history.push('/categories')
+            this.props.history.push('/recipe/'+this.getRecipeId())
         })
         .catch(error => {
             alert(error);
@@ -69,14 +69,7 @@ class AddRecipe extends Component{
     }
 
     render(){
-        console.log(this.getRecipeId())
-        if(this.state.category_array){
-            const all_categories = this.state.category_array.map((category) => {
-                return(
-                    <option value={category.id} key={category.id}>{category.name}</option>
-                );
-            })
-        
+        const { category_array, category_id } = this.state;
             return(
                 <div>
                     <Navbar />
@@ -89,9 +82,8 @@ class AddRecipe extends Component{
                             <form onSubmit={this.handleSubmit}>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-plus"></i></span>                                        
-                                    <select className="form-control" name="category" onChange={this.handleSelectChanged} value={this.state.category_id} required>
-                                        <option value={0}>SELECT CATEGORY TO ATTACH</option>
-                                        { all_categories }
+                                    <select className="form-control" name="category" value={category_id} required>
+                                    <option>{"CATEGORY NAME: "+category_array.name}</option>
                                     </select>
                                 </div>
                                 <div className="input-group">
@@ -124,6 +116,5 @@ class AddRecipe extends Component{
             );
         }
     }
-}
 
 export default AddRecipe;
