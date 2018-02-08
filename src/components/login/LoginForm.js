@@ -31,17 +31,16 @@ class LoginForm extends Component {
 
     submitForm = (event) => {
         event.preventDefault();
+        const {username, password} = this.state;
         axios.post(BASE_URL + LOGIN_URL, {
-            username: this.state.username,
-            password: this.state.password
+            username: username,
+            password: password
           })
           .then(response  => {
-            console.log("worked: ", response);
             localStorage.setItem('token', response.data.access_token);
             window.location.reload();
           })
           .catch(error => {
-            console.log("here: ", error.response);
             localStorage.setItem('errorMessage', error.response.data.message);
             window.location.reload()
           });
@@ -53,9 +52,10 @@ class LoginForm extends Component {
     }
     
     render(){
+        const {Auth, username, password} = this.state;
         return(
             <div>
-                { this.state.Auth ? <Redirect to={{pathname: '/categories'}}/> : (
+                { Auth ? <Redirect to={{pathname: '/categories'}}/> : (
                 <div>
                 <div className="container clear-top">
                 <form onSubmit={this.submitForm}>
@@ -66,7 +66,7 @@ class LoginForm extends Component {
                         type="text" name="username" 
                         id="username" 
                         placeholder="USERNAME"  
-                        value={this.state.username}
+                        value={username}
                         onChange={this.handleUsernameChanged}
                         required />
                     </div>
@@ -77,7 +77,7 @@ class LoginForm extends Component {
                         name="password" 
                         id="password" 
                         placeholder="PASSWORD"
-                        value={this.state.password}
+                        value={password}
                         onChange={this.handlePasswordChanged}
                         required />
                     </div>
