@@ -1,11 +1,7 @@
 import React, {Component}  from 'react';
 import axios from 'axios';
 import {BASE_URL, AuthToken} from '../../utils/Constants';
-import { Redirect } from 'react-router-dom';
 import Navbar from '../common/Navbar';
-import EditCategory from './EditCategory';
-import EditRecipe from '../recipes/EditRecipe';
-
 class Category extends Component {
     constructor(props){
         super(props);
@@ -36,20 +32,15 @@ class Category extends Component {
     }
 
     default(){
-        const {categories, per_page, total_items_returned} = this.state;
         axios.get(BASE_URL+'categories', {headers: {Authorization: AuthToken}})
         .then(response => {
-            console.log(response.data)
             this.setState({categories: response.data})
-            this.setState({per_page: this.state.categories[0].per_page})
-            this.setState({total_items_returned: this.state.categories[0].total_items_returned})
+            const {categories} = this.state;
+            this.setState({per_page: categories[0].per_page})
+            this.setState({total_items_returned: categories[0].total_items_returned})
         })
         .catch(error => {
-            console.log(error)
-            if (error){
-                //this.handleError();
-                alert(error)
-            }
+            
         });
     }
 
@@ -60,7 +51,6 @@ class Category extends Component {
     // }
 
     OnInputChange = (event) => {
-        const {categories, per_page, total_items_returned} = this.state
         if(!event.target.value){
             this.default()
             return
@@ -68,7 +58,8 @@ class Category extends Component {
         axios.get(`${BASE_URL}categories/search?q=${event.target.value}`, {headers: {Authorization: AuthToken}})
         .then(response => {
             this.setState({categories: response.data})
-            this.setState({per_page: this.state.categories[0].per_page})
+            const {categories, per_page, total_items_returned} = this.state
+            this.setState({per_page: categories[0].per_page})
             this.setState({total_items_returned: categories[0].total_items_returned})
         })
         .catch(error => {
@@ -94,7 +85,7 @@ class Category extends Component {
         axios.delete(`${BASE_URL}categories/${event.target.id}`, {headers: {Authorization: AuthToken}})
         .then(response => {
             alert('Category deleted')
-            this.setState()
+            this.default();
         })
         .catch(error => {
             alert(error);
@@ -103,10 +94,9 @@ class Category extends Component {
       
 
     render(){
-        console.log(this.props)
-        const {categories, per_page, total_items_returned} = this.state
+        const {categories, per_page, total_items_returned} = this.state;
         if (categories.length > 0){
-        const cat = categories.map((category) => {
+            const cat = categories.map((category) => {
             return(
                 <tbody key={category.id}>
                 <tr>
@@ -171,7 +161,10 @@ class Category extends Component {
         );
     } else {
         return(
-            <p> User has no Categories or No resultset from search</p>
+            <div className="container">
+            <p className="text-center"> User has no Registered Categories</p>
+            <input type="submit" value="ADD" className="center-block btn-warning btn-lg" onClick={this.addClicked} />
+            </div>
         )
     }
     }
