@@ -13,11 +13,12 @@ class AddCategory extends Component{
 
     submitAddCategoryForm = (event) => {
         event.preventDefault();
+        const {category} = this.state;
         axios.post(BASE_URL+'categories', {
-            name: this.state.category,
+            name: category,
         }, {headers: {Authorization: AuthToken}})
         .then(response => {
-            alert('Response: Category ' + response.statusText);
+            alert('Category Added Successfully');
             this.props.history.push('/categories')
         })
         .catch(error => {
@@ -30,7 +31,7 @@ class AddCategory extends Component{
                 alert(error)
             }
         });
-        this.reloadPage();
+        this.props.history.push('/categories')
     }
 
     handleCategoryNameChanged = (event) => {
@@ -45,8 +46,9 @@ class AddCategory extends Component{
         
         return(
             /* ADD CATEGORY */
-            <div className="modal-dialog">
+            <div>
                 <Navbar />
+            <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h4 className="modal-title">YUMMY RECIPES: Add Category</h4>
@@ -68,6 +70,7 @@ class AddCategory extends Component{
                     </div>
                 </div>
             </div>
+        </div>
         );
     }
 }
