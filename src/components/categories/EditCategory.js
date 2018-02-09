@@ -3,8 +3,6 @@ import axios from 'axios'
 import {BASE_URL, AuthToken} from '../../utils/Constants';
 import Navbar from '../common/Navbar';
 import { get } from 'http';
-import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from 'constants';
-
 class EditCategory extends Component {
     constructor(){
         super();
@@ -15,7 +13,7 @@ class EditCategory extends Component {
         }
     }
 
-    // Function called to update
+    // Function called to update category
     updateCategory = (event) => {
         event.preventDefault();
         const {category} = this.state;
@@ -30,10 +28,12 @@ class EditCategory extends Component {
         });
     }
 
+    // function that gets category id from url
     getCategoryId(){
         return this.props.match.params.id;
     }
 
+    // life cycle method that loads default state of components
     componentDidMount(){
         axios.get(`${BASE_URL}categories/${this.getCategoryId()}`, {headers: {Authorization: AuthToken}})
         .then(response => {
@@ -44,13 +44,17 @@ class EditCategory extends Component {
         });
     }
 
+    // function to handle category edited
     handleCategroyEdited = (event) => {
         this.setState({category: event.target.value});
     }
 
+    // function to handle select changed
     handleSelectChanged = (event) => {
         this.setState({category_id: event.target.value});
     }
+
+    // function to render jsx
     render(){
                 /* EDIT CATEGORY */
         const {edit_category_array, category_id} = this.state;
