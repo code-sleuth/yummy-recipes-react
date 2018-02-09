@@ -2,12 +2,17 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import AddRecipe from './AddRecipe';
 
-describe('signup tests', () => {
+describe('Add recipe tests', () => {
     const props = {
         match: {
             params: {
 
             }
+        }
+    }
+    const event={
+        target:{
+            value:{}
         }
     }
     it('has divs', () => {
@@ -49,5 +54,35 @@ describe('signup tests', () => {
     it('has br', () => {
         const wrapper = shallow(<AddRecipe {...props}/>)
         expect(wrapper.find('br').length).toBe(1)
+    })
+
+    it('gets recipe id', () => {
+        const wrapper = shallow(<AddRecipe {...props}/>); 
+        wrapper.instance().getRecipeId()
+    })
+
+    it('component mounts', () => {
+        const wrapper = shallow(<AddRecipe {...props}/>); 
+        wrapper.instance().componentDidMount()
+    })
+
+    it('handles select changed', () => {
+        const wrapper = shallow(<AddRecipe {...props}/>); 
+        wrapper.instance().handleSelectChanged(event)
+    })
+
+    it('handles recipe name changed', () => {
+        const wrapper = shallow(<AddRecipe {...props}/>); 
+        wrapper.instance().handleRecipeNameChanged(event)
+    })
+
+    it('handles details changed', () => {
+        const wrapper = shallow(<AddRecipe {...props}/>); 
+        wrapper.instance().handleDetailsChanged(event)
+    })
+
+    it('handles ingredients changed', () => {
+        const wrapper = shallow(<AddRecipe {...props}/>); 
+        wrapper.instance().handleIngredientsChanged(event)
     })
 })
