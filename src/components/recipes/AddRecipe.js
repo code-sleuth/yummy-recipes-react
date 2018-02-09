@@ -15,11 +15,12 @@ class AddRecipe extends Component{
             id: this.props.id
         }
     }
-
+    // function to get recipe id from url
     getRecipeId(){
         return this.props.match.params.id;
     }
-
+    
+    // life cycle method to load default state of components
     componentDidMount(){
         axios.get(`${BASE_URL}categories/${this.getRecipeId()}`, {headers: {Authorization: AuthToken}})
         .then(response => {
@@ -31,6 +32,7 @@ class AddRecipe extends Component{
         })
     }
 
+    // function to handle submited form data
     handleSubmit = (event) => {
         event.preventDefault();
         const { category_id, name, details, ingredients} = this.state;
@@ -52,22 +54,27 @@ class AddRecipe extends Component{
 
     }
 
+    // function to handle select input changed
     handleSelectChanged = (event) => {
         this.setState({category_id: event.target.value});
     }
 
+    // function to handle recipe name input change
     handleRecipeNameChanged = (event) => {
         this.setState({name: event.target.value});
     }
 
+    // function to handle details input changed
     handleDetailsChanged = (event) => {
         this.setState({details: event.target.value});
     }
 
+    // function to handle ingredients input changed
     handleIngredientsChanged = (event) => {
         this.setState({ingredients: event.target.value});
     }
 
+    // function to render jsx
     render(){
         const { category_array, category_id } = this.state;
             return(
