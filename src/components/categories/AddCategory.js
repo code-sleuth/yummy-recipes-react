@@ -11,6 +11,7 @@ class AddCategory extends Component{
         }
     }
 
+    // Function to push form input to api
     submitAddCategoryForm = (event) => {
         event.preventDefault();
         const {category} = this.state;
@@ -22,22 +23,17 @@ class AddCategory extends Component{
             this.props.history.push('/categories')
         })
         .catch(error => {
-            if (!error.response.status){
-                alert('no status code')
-            }
-            else if (error.response.status === 409){
-                alert('Duplicate Category Name');
-            } else {
-                alert(error)
-            }
+            
         });
-        this.props.history.push('/categories')
+        //this.props.history.push('/categories')
     }
 
+    //function to handle user name change input
     handleCategoryNameChanged = (event) => {
         this.setState({category: event.target.value})
     }
 
+    //function top reload page
     reloadPage(){
         window.location.reload();
     }
