@@ -14,21 +14,23 @@ class LoginForm extends Component {
         }
     }
 
+    // function to handle username input changed
     handleUsernameChanged = (event) => {
         this.setState({username: event.target.value});
-        
     }
 
+    // function to handle password input change
     handlePasswordChanged = (event) => {
         this.setState({password: event.target.value});
     }
 
+    // life cycle method 
+    // changes value of auth in state
     componentDidMount(){
         this.setState({Auth: Authenticated})
     }
 
-    
-
+    // function called when user submits login form
     submitForm = (event) => {
         event.preventDefault();
         const {username, password} = this.state;
@@ -46,11 +48,7 @@ class LoginForm extends Component {
           });
     }
 
-    onSubmitSignUp = (event) => {
-        event.preventDefault()
-        this.setState()
-    }
-    
+    // funtion to render jsx
     render(){
         const {Auth, username, password} = this.state;
         return(
