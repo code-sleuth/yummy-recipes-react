@@ -14,28 +14,32 @@ class SignupPage extends Component {
             confirmpassword: ""
         }
     }
-    // These functions handle user input
+    // function to handle username input changed
     handleUsernameChanged = (event) =>{
         this.setState({username: event.target.value});
     }
 
+    // function to handle fullname input changed
     handleFullnameChanged = (event) =>{
         this.setState({fullname: event.target.value})
     }
 
+    // function to handle email input changed
     handleEmailChanged = (event) =>{
         this.setState({email: event.target.value});
     }
 
+    // function to handle password input changed
     handlePasswordChanged = (event) =>{
         this.setState({password: event.target.value});
     }
 
+    // function to handle confirm password input changed
     handleConfirmPasswordChanged = (event) => {
         this.setState({confirmpassword: event.target.value});
     }
 
-    // function to submit form data
+    // function to handle submitted form data
     submitForm = (event) => {
         event.preventDefault();
         const {username, fullname, email, confirmpassword, password} = this.state;
@@ -46,7 +50,7 @@ class SignupPage extends Component {
             alert("Password too short")
             return
         }
-        axios.post('http://127.0.0.1:5000/auth/register', {
+        axios.post(BASE_URL+'auth/register', {
             username: username,
             fullname: fullname,
             email: email,
@@ -59,8 +63,9 @@ class SignupPage extends Component {
         .catch(error => {
             alert("Error: " + error.response)
         })
-        this.setState();
     }
+
+    // function to handle jsx
     render(){
         
         return(
@@ -70,19 +75,19 @@ class SignupPage extends Component {
                         <h4 className="modal-title">SIGN UP</h4>
                     </div>
                     <div className="modal-body">
-                        <form onSubmit={this.submitForm.bind(this)}>
+                        <form onSubmit={this.submitForm}>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-eye-open"></i></span>
                                 <input type="text" name="username" placeholder="USERNAME" className="form-control"
                                  value={this.state.username} 
-                                 onChange={this.handleUsernameChanged.bind(this)}
+                                 onChange={this.handleUsernameChanged}
                                  required 
                                 />
                             </div>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
                                 <input type="text" name="fullname" placeholder="FULLNAME" className="form-control"
-                                 onChange={this.handleFullnameChanged.bind(this)}
+                                 onChange={this.handleFullnameChanged}
                                  required
                                 />
                             </div>
