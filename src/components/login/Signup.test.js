@@ -3,6 +3,11 @@ import {shallow} from 'enzyme';
 import Signup from './Signup';
 
 describe('signup tests', () => {
+    const event={
+        target:{
+            value:{}
+        }
+    }
     it('has divs', () => {
         const wrapper = shallow(<Signup />)
         expect(wrapper.find('div').length).toBe(10)
@@ -40,6 +45,26 @@ describe('signup tests', () => {
     it('has br', () => {
         const wrapper = shallow(<Signup />)
         expect(wrapper.find('br').length).toBe(1)
+    })
+
+    it('handles username changed', () => {
+        const wrapper = shallow(<Signup />); 
+        wrapper.instance().handleUsernameChanged(event)
+    })
+
+    it('handles fullname changed', () => {
+        const wrapper = shallow(<Signup />); 
+        wrapper.instance().handleFullnameChanged(event)
+    })
+
+    it('handles password changed', () => {
+        const wrapper = shallow(<Signup />); 
+        wrapper.instance().handlePasswordChanged(event)
+    })
+
+    it('handles confirm password changed', () => {
+        const wrapper = shallow(<Signup />); 
+        wrapper.instance().handleConfirmPasswordChanged(event)
     })
             
 })
