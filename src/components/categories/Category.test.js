@@ -7,10 +7,18 @@ import Navbar from '../common/Navbar';
 
 describe('these are category component tests', () => {
     const props={
+        history:{
+            push:'/edit'
+        },
         match:{
             params:{
             
             } 
+        }
+    }
+    const event={
+        target:{
+            value:{}
         }
     }
     it('renders AddCategory component', () => {
@@ -49,4 +57,29 @@ describe('these are category component tests', () => {
         const wrapper = shallow(<Category />)
         expect(wrapper.find('div').length).toBe(1)
     });
+
+    it('has input', () => {
+        const wrapper = shallow(<Category />)
+        expect(wrapper.find('input').length).toBe(1)
+    });
+
+    it('default function', () => {
+        const wrapper = shallow(<Category />); 
+        wrapper.instance().default()
+    })
+
+    it('component did mount', () => {
+        const wrapper = shallow(<Category />); 
+        wrapper.instance().componentDidMount()
+    })
+
+    it('on input change', () => {
+        const wrapper = shallow(<Category />); 
+        wrapper.instance().OnInputChange(event)
+    })
+
+    it('delete category', () => {
+        const wrapper = shallow(<Category />); 
+        wrapper.instance().deleteCategory(event)
+    })
 });
