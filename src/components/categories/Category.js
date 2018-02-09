@@ -11,7 +11,8 @@ class Category extends Component {
             total_items_returned: ''
         }
     }
-
+    // function called when changing page
+    // it takes an id which will be the page to redirect to
     pageChanged(id){
         axios.get(`${BASE_URL}categories?page=${id}`, {headers: {Authorization: AuthToken}})
         .then(response => {
@@ -22,15 +23,18 @@ class Category extends Component {
         });
     }
 
-
+    // function called when user clicks on page links
+    // in turn it gets the page id and passes it ti pageChanged function
     handleClick = (event) => {
         this.pageChanged(event.target.id)
     }
 
+    // life cycle function for when component loads for the first time
     componentDidMount(){
         this.default();
     }
 
+    // this function loads the default values of categories in the api
     default(){
         axios.get(BASE_URL+'categories', {headers: {Authorization: AuthToken}})
         .then(response => {
@@ -44,12 +48,7 @@ class Category extends Component {
         });
     }
 
-    // handleError(){
-    //     //localStorage.removeItem('token')
-    //     //window.location.reload();
-    //     alert('here from cats')
-    // }
-
+    // function called every time user changes input in the search bar 
     OnInputChange = (event) => {
         if(!event.target.value){
             this.default()
@@ -69,18 +68,22 @@ class Category extends Component {
         });
     }
 
+    // function called when row is clicked
     handleRowClicked = (event) => {
         this.props.history.push('/recipe/'+event.target.id)    
     }
 
+    // function called when add button is clicked
     addClicked= (event) => {
         this.props.history.push('/add_categories')
     }
 
+    // function called when the edit button is clicked
     editClicked = (event) => {
         this.props.history.push('/edit_categories/'+event.target.id);
     }
 
+    // function called when the delete button is clicked
     deleteCategory = (event) => {
         axios.delete(`${BASE_URL}categories/${event.target.id}`, {headers: {Authorization: AuthToken}})
         .then(response => {
@@ -92,7 +95,7 @@ class Category extends Component {
         });
     }
       
-
+    // function that renders the entie component.
     render(){
         const {categories, per_page, total_items_returned} = this.state;
         if (categories.length > 0){
@@ -128,42 +131,42 @@ class Category extends Component {
         });
         
         return(
-           <div>
+            <div>
                <Navbar /> 
-           <div className="container">
-                <h2>Categories</h2>
-                <div>
-                    <input type="submit" value="ADD" className="btn btn-warning" onClick={this.addClicked} />
+                <div className="container">
+                    <h2>Categories</h2>
+                    <div>
+                        <input type="submit" value="ADD" className="btn btn-warning" onClick={this.addClicked} />
+                    </div>
+                    <div className="search-bar">
+                    <input placeholder="SEARCH" onChange={this.OnInputChange} />
+                    </div>                             
+                    <table className="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Category Name</th>
+                            <th>Date Created</th>
+                            <th>Last Edited</th>
+                            <th>View</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        { cat }
+                    </table>
+                    <div className="text-center">
+                        <ul className="pagination">
+                            {pages}
+                        </ul>
+                    </div>
                 </div>
-                <div className="search-bar">
-                <input placeholder="SEARCH" onChange={this.OnInputChange} />
-                </div>                             
-                <table className="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Category Name</th>
-                        <th>Date Created</th>
-                        <th>Last Edited</th>
-                        <th>View</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                    </thead>
-                    { cat }
-                </table>
-                <div className="text-center">
-                    <ul className="pagination">
-                        {pages}
-                    </ul>
-                </div>
-            </div>
             </div>
         );
     } else {
         return(
             <div className="container">
-            <p className="text-center"> User has no Registered Categories</p>
-            <input type="submit" value="ADD" className="center-block btn-warning btn-lg" onClick={this.addClicked} />
+                <p className="text-center"> User has no Registered Categories</p>
+                <input type="submit" value="ADD" className="center-block btn-warning btn-lg" onClick={this.addClicked} />
             </div>
         )
     }
