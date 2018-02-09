@@ -16,6 +16,7 @@ class User extends Component {
         }
     }
 
+    // function that calls api to populate state initially
     default(){
         axios.get(BASE_URL+'users/info', {headers: {Authorization: AuthToken}})
         .then(response => {
@@ -26,23 +27,27 @@ class User extends Component {
         })
     }
 
+    // life cycle method that calls default() function
     componentDidMount(){
         this.default()
     }
 
+    // function to handle fullname input changed
     handleFullnameChanged = (event) => {
         this.setState({fullname: event.target.value});
     }
 
-
+    // function to handle old password input changed
     handleOldPasswordChanged = (event) => {
         this.setState({old_password: event.target.value});
     }
 
+    // function to handle  new password input changed
     handleNewPasswordChanged = (event) => {
         this.setState({new_password: event.target.value});
     }
-
+    
+    // function to handle submited user data
     handleSubmit = (event) => {
         event.preventDefault();
         const {username, fullname, email, old_password, new_password, user_details_array} = this.state;
@@ -63,8 +68,7 @@ class User extends Component {
         });
     }
 
-
-
+    // function to render jsx
     render(){
         const {user_details_array} = this.state;
         return(
