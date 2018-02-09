@@ -3,6 +3,13 @@ import { shallow } from 'enzyme';
 import Navbar from './Navbar';
 
 describe('Nav bar tests', () => {
+    const props={
+        history:{
+            push:{
+
+            }
+        }
+    }
     it('has divs', () => {
         const wrapper = shallow(<Navbar />)
         expect(wrapper.find('div').length).toBe(2)
@@ -38,4 +45,9 @@ describe('Nav bar tests', () => {
         const wrapper = shallow(<Navbar />)
         expect(wrapper.find('span').length).toBe(4)
     });
+
+    it('handles toggle', () => {
+        const wrapper = shallow(<Navbar {...props}/>); 
+        wrapper.instance()._onToggleNav()
+    })
 });
