@@ -16,6 +16,7 @@ class EditRecipe extends Component{
         }
     }
 
+    // life cycle function that sets the default state of the component
     componentDidMount(){
         axios.get(`${BASE_URL}recipes/${this.getId()}`, {headers: {Authorization: AuthToken}})
         .then(response => {
@@ -26,26 +27,32 @@ class EditRecipe extends Component{
         })
     }
 
+    // function to handle recipe input changed
     handleRecipeChanged = (event) => {
         this.setState({recipe_id: event.target.value});
     }
 
+    // function to handle category input changed
     handleCategoryChanged = (event) => {
         this.setState({category_id: event.target.value});
     }
 
+    // function to handle recipe name input changed
     handleRecipeNameChanged = (event) => {
         this.setState({name: event.target.value});
     }
 
+    // function to handle recipe detail input changed
     handleRecipeDetailsChanged = (event) => {
         this.setState({details: event.target.value});
     }
 
+    // function to handle recipe ingredients input changed
     handleRecipeIngredientsChanged = (event) => {
         this.setState({ingredients: event.target.value});
     }
 
+    // function to handle user submitted data
     handleSubmit = (event) => {
         event.preventDefault();
         const {category_id, name, details, ingredients} = this.state
@@ -65,10 +72,12 @@ class EditRecipe extends Component{
         })
     }
 
+    // function to get category id from url
     getId(){
         return this.props.match.params.id
     }
 
+    // function to handle jsx
     render(){
         const {recipe_array} = this.state;
             return(
