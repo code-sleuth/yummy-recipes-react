@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/code-sleuth/yummy-recipes-react.svg?branch=dev&cacheBuster=1)](https://travis-ci.org/code-sleuth/yummy-recipes-react)
 
+[![Coverage Status](https://coveralls.io/repos/github/code-sleuth/yummy-recipes-react/badge.svg)](https://coveralls.io/github/code-sleuth/yummy-recipes-react)
+
 # YUMMY RECIPES REACT APP
 
 ## About
