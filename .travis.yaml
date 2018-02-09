@@ -1,8 +1,15 @@
+sudo: required
+dist: trusty
 language: node_js
 node_js:
-  - "stable"
+  # LTS version
+  - "8.0"
 cache:
   directories:
-  - node_modules
+    - node_modules
+install:
+  - npm install
+# command to run tests
 script:
-  - npm test -- --coverage
+    - npm test -- --coverage
+after_success:  "cat ./node_modules/coveralls/bin/coveralls.js"
