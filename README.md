@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/code-sleuth/yummy-recipes-react.svg?branch=dev&cacheBuster=1)](https://travis-ci.org/code-sleuth/yummy-recipes-react)
+
 # YUMMY RECIPES REACT APP
 
 ## About
