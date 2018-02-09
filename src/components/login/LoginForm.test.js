@@ -3,6 +3,11 @@ import {shallow} from 'enzyme';
 import LoginForm from './LoginForm';
 
 describe('Login form tests', () => {
+    const event={
+        target:{
+            value:{}
+        }
+    }
     it('has divs', () => {
         const wrapper = shallow(<LoginForm />)
         expect(wrapper.find('div').length).toBe(8)
@@ -46,5 +51,14 @@ describe('Login form tests', () => {
     it('has p', () => {
         const wrapper = shallow(<LoginForm />)
         expect(wrapper.find('p').length).toBe(1)
+    })
+
+    it('handles username changed', () => {
+        const wrapper = shallow(<LoginForm />); 
+        wrapper.instance().handleUsernameChanged(event)
+    })
+    it('handles password changed', () => {
+        const wrapper = shallow(<LoginForm />); 
+        wrapper.instance().handlePasswordChanged(event)
     })
 })
