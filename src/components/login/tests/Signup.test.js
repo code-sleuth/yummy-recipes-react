@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import Signup from './Signup';
+import Signup from '../Signup';
 
 describe('signup tests', () => {
     const event={
