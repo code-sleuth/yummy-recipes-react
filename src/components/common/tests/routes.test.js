@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import Routes from './routes';
+import Routes from '../routes';
 
 describe('routes tests', () => {
     it('has div', () => {

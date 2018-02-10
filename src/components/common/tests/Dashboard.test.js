@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Navbar from './Navbar';
-import Recipes from '../recipes/Recipes';
-import Dashboard from './Dashboard';
+import Navbar from '../Navbar';
+import Recipes from '../../recipes/Recipes';
+import Dashboard from '../Dashboard';
 
 describe('these are category component tests', () => {
     const props={
