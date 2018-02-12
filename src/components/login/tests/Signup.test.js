@@ -47,24 +47,9 @@ describe('signup tests', () => {
         expect(wrapper.find('br').length).toBe(1)
     })
 
-    it('handles username changed', () => {
+    it('handles input change', () => {
         const wrapper = shallow(<Signup />); 
-        wrapper.instance().handleUsernameChanged(event)
-    })
-
-    it('handles fullname changed', () => {
-        const wrapper = shallow(<Signup />); 
-        wrapper.instance().handleFullnameChanged(event)
-    })
-
-    it('handles password changed', () => {
-        const wrapper = shallow(<Signup />); 
-        wrapper.instance().handlePasswordChanged(event)
-    })
-
-    it('handles confirm password changed', () => {
-        const wrapper = shallow(<Signup />); 
-        wrapper.instance().handleConfirmPasswordChanged(event)
+        wrapper.instance().handleChange(event)
     })
             
 })
