@@ -27,12 +27,8 @@ describe('these are edit category component tests', () => {
         wrapper.instance().getCategoryId()
     })
 
-    it('handles category edited', () => {
+    it('handles input change', () => {
         const wrapper = shallow(<EditCategory {...props}/>); 
-        wrapper.instance().handleCategroyEdited(event)
-    })
-    it('handles select changed', () => {
-        const wrapper = shallow(<EditCategory {...props}/>); 
-        wrapper.instance().handleSelectChanged(event)
+        wrapper.instance().handleChange(event)
     })
 });
