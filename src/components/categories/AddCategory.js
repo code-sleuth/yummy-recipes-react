@@ -37,7 +37,6 @@ class AddCategory extends Component{
     }
 
     render(){
-        console.log(this.state.catData.category)
         return(
             /* ADD CATEGORY */
             <div>
