@@ -8,20 +8,17 @@ class LoginForm extends Component {
     constructor(){
         super();
         this.state = {
-            username: "",
-            password: "",
+            userData: {username: "", password: ""},
             Auth: ''
         }
     }
 
-    // function to handle username input changed
-    handleUsernameChanged = (event) => {
-        this.setState({username: event.target.value});
-    }
-
-    // function to handle password input change
-    handlePasswordChanged = (event) => {
-        this.setState({password: event.target.value});
+    //function to handle user input
+    handleChange = (event) => {
+        const field = event.target.id
+        let userData = this.state.userData
+        userData[field] = event.target.value
+        this.setState({ userData })
     }
 
     // life cycle method 
@@ -33,10 +30,10 @@ class LoginForm extends Component {
     // function called when user submits login form
     submitForm = (event) => {
         event.preventDefault();
-        const {username, password} = this.state;
+        const {userData} = this.state;
         axios.post(BASE_URL + LOGIN_URL, {
-            username: username,
-            password: password
+            username: userData.username,
+            password: userData.password
           })
           .then(response  => {
             localStorage.setItem('token', response.data.access_token);
@@ -61,22 +58,19 @@ class LoginForm extends Component {
                     <div className="input-group">
                         <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
                         <input className="form-control" 
-                        type="text" name="username" 
+                        type="text" 
                         id="username" 
                         placeholder="USERNAME"  
-                        value={username}
-                        onChange={this.handleUsernameChanged}
+                        onChange={this.handleChange}
                         required />
                     </div>
                     <div className="input-group">
                         <span className="input-group-addon"><i className="glyphicon glyphicon-lock"></i></span>
                         <input className="form-control" 
                         type="password" 
-                        name="password" 
                         id="password" 
                         placeholder="PASSWORD"
-                        value={password}
-                        onChange={this.handlePasswordChanged}
+                        onChange={this.handleChange}
                         required />
                     </div>
                     <br />
