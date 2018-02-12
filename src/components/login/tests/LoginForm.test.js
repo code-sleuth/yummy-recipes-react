@@ -53,12 +53,8 @@ describe('Login form tests', () => {
         expect(wrapper.find('p').length).toBe(1)
     })
 
-    it('handles username changed', () => {
+    it('handles input changed', () => {
         const wrapper = shallow(<LoginForm />); 
-        wrapper.instance().handleUsernameChanged(event)
-    })
-    it('handles password changed', () => {
-        const wrapper = shallow(<LoginForm />); 
-        wrapper.instance().handlePasswordChanged(event)
+        wrapper.instance().handleChange(event)
     })
 })
