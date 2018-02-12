@@ -7,54 +7,34 @@ class SignupPage extends Component {
     constructor(){
         super();
         this.state = {
-            username: "",
-            fullname: "",
-            email: "",
-            password: "",
-            confirmpassword: ""
+            userData:{username: "",fullname: "",email: "",password: "",confirmpassword: ""}
         }
     }
-    // function to handle username input changed
-    handleUsernameChanged = (event) =>{
-        this.setState({username: event.target.value});
-    }
 
-    // function to handle fullname input changed
-    handleFullnameChanged = (event) =>{
-        this.setState({fullname: event.target.value})
-    }
-
-    // function to handle email input changed
-    handleEmailChanged = (event) =>{
-        this.setState({email: event.target.value});
-    }
-
-    // function to handle password input changed
-    handlePasswordChanged = (event) =>{
-        this.setState({password: event.target.value});
-    }
-
-    // function to handle confirm password input changed
-    handleConfirmPasswordChanged = (event) => {
-        this.setState({confirmpassword: event.target.value});
+    //function to handle user input
+    handleChange = (event) => {
+        const field = event.target.id
+        let userData = this.state.userData
+        userData[field] = event.target.value
+        this.setState({ userData })
     }
 
     // function to handle submitted form data
     submitForm = (event) => {
         event.preventDefault();
-        const {username, fullname, email, confirmpassword, password} = this.state;
-        if (confirmpassword !== password) {
+        const {userData} = this.state;
+        if (userData.confirmpassword !== userData.password) {
             alert("Password not the same")
             return
-        } else if(password.length < 4){
+        } else if(userData.password.length < 4){
             alert("Password too short")
             return
         }
         axios.post(BASE_URL+'auth/register', {
-            username: username,
-            fullname: fullname,
-            email: email,
-            password: password,
+            username: userData.username,
+            fullname: userData.fullname,
+            email: userData.email,
+            password: userData.password,
         })
         .then(response => {
             alert("Response: " + response.data.message)
@@ -67,7 +47,6 @@ class SignupPage extends Component {
 
     // function to handle jsx
     render(){
-        
         return(
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -78,37 +57,36 @@ class SignupPage extends Component {
                         <form onSubmit={this.submitForm}>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-eye-open"></i></span>
-                                <input type="text" name="username" placeholder="USERNAME" className="form-control"
-                                 value={this.state.username} 
-                                 onChange={this.handleUsernameChanged}
+                                <input type="text" id="username" placeholder="USERNAME" className="form-control"
+                                 onChange={this.handleChange}
                                  required 
                                 />
                             </div>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
-                                <input type="text" name="fullname" placeholder="FULLNAME" className="form-control"
-                                 onChange={this.handleFullnameChanged}
+                                <input type="text" id="fullname" placeholder="FULLNAME" className="form-control"
+                                 onChange={this.handleChange}
                                  required
                                 />
                             </div>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-envelope"></i></span>
-                                <input type="email" name="email" placeholder="EMAIL" className="form-control"
-                                 onChange={this.handleEmailChanged}
+                                <input type="email" id="email" placeholder="EMAIL" className="form-control"
+                                 onChange={this.handleChange}
                                  required
                                 />
                             </div>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-lock"></i></span>
-                                <input type="password" name="password" placeholder="PASSWORD" className="form-control"
-                                 onChange={this.handlePasswordChanged}
+                                <input type="password" id="password" placeholder="PASSWORD" className="form-control"
+                                 onChange={this.handleChange}
                                  required
                                 />
                             </div>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-lock"></i></span>
-                                <input type="password" name="confirmpassword" placeholder="CONFIRM PASSWORD" className="form-control"
-                                 onChange={this.handleConfirmPasswordChanged}
+                                <input type="password" id="confirmpassword" placeholder="CONFIRM PASSWORD" className="form-control"
+                                 onChange={this.handleChange}
                                  required
                                 />
                             </div>
