@@ -73,28 +73,8 @@ describe('edit recipe tests', () => {
         wrapper.instance().getId()
     })
 
-    it('handles recipe changed', () => {
+    it('handle change', () => {
         const wrapper = shallow(<EditRecipe {...props}/>); 
-        wrapper.instance().handleRecipeChanged(event)
-    })
-
-    it('handles category changed', () => {
-        const wrapper = shallow(<EditRecipe {...props}/>); 
-        wrapper.instance().handleCategoryChanged(event)
-    })
-
-    it('handles recipe name changed', () => {
-        const wrapper = shallow(<EditRecipe {...props}/>); 
-        wrapper.instance().handleRecipeNameChanged(event)
-    })
-
-    it('handles recipe details changed', () => {
-        const wrapper = shallow(<EditRecipe {...props}/>); 
-        wrapper.instance().handleRecipeDetailsChanged(event)
-    })
-
-    it('handles recipe ingredients changed', () => {
-        const wrapper = shallow(<EditRecipe {...props}/>); 
-        wrapper.instance().handleRecipeIngredientsChanged(event)
+        wrapper.instance().handleChange(event)
     })
 })
