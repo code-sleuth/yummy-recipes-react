@@ -6,6 +6,9 @@ describe('Login form tests', () => {
     const event={
         target:{
             value:{}
+        },
+        preventDefault: () => {
+
         }
     }
     it('has divs', () => {
@@ -56,5 +59,10 @@ describe('Login form tests', () => {
     it('handles input changed', () => {
         const wrapper = shallow(<LoginForm />); 
         wrapper.instance().handleChange(event)
+    })
+
+    it('handle  submit', () => {
+        const wrapper = shallow(<LoginForm />); 
+        wrapper.instance().submitForm(event)
     })
 })
