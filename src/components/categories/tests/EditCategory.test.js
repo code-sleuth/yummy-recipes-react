@@ -22,10 +22,10 @@ describe('these are edit category component tests', () => {
         const wrapper = shallow(<EditCategory {...props}/>); 
         wrapper.instance().componentDidMount()
     })
-    it('getCategoryId', () => {
-        const wrapper = shallow(<EditCategory {...props}/>); 
-        wrapper.instance().getCategoryId()
-    })
+    // it('getCategoryId', () => {
+    //     const wrapper = shallow(<EditCategory {...props}/>); 
+    //     wrapper.instance().getCategoryId()
+    // })
 
     it('handles input change', () => {
         const wrapper = shallow(<EditCategory {...props}/>); 
