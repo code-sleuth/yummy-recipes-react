@@ -8,7 +8,9 @@ import Navbar from '../../common/Navbar';
 describe('these are category component tests', () => {
     const props={
         history:{
-            push:'/edit'
+            push: {
+
+            }
         },
         match:{
             params:{
@@ -19,6 +21,12 @@ describe('these are category component tests', () => {
     const event={
         target:{
             value:{}
+        },
+        preventDefault: () => {
+
+        },
+        push: (event) =>{
+
         }
     }
     it('renders AddCategory component', () => {
@@ -45,7 +53,17 @@ describe('these are category component tests', () => {
 
     it('renders form input', () => {
         const wrapper = shallow(<EditCategory {...props}/>)
-        expect(wrapper.find('input').length).toBe(2)
+        expect(wrapper.find('input').length).toBe(3)
+    });
+
+    it('renders i', () => {
+        const wrapper = shallow(<EditCategory {...props}/>)
+        expect(wrapper.find('i').length).toBe(1)
+    });
+
+    it('renders form span', () => {
+        const wrapper = shallow(<EditCategory {...props}/>)
+        expect(wrapper.find('input').length).toBe(3)
     });
 
     it('renders search bar', () => {
@@ -55,7 +73,7 @@ describe('these are category component tests', () => {
 
     it('renders divs', () => {
         const wrapper = shallow(<Category />)
-        expect(wrapper.find('div').length).toBe(1)
+        expect(wrapper.find('div').length).toBe(2)
     });
 
     it('has input', () => {
@@ -82,4 +100,29 @@ describe('these are category component tests', () => {
         const wrapper = shallow(<Category />); 
         wrapper.instance().deleteCategory(event)
     })
+
+    it('update', () => {
+        const wrapper = shallow(<EditCategory {...props} />); 
+        wrapper.instance().updateCategory(event)
+    })
+
+    it('handle click', () => {
+        const wrapper = shallow(<Category />); 
+        wrapper.instance().handleClick(event)
+    })
+
+    it('component did mount', () => {
+        const wrapper = shallow(<Category />); 
+        wrapper.instance().componentDidMount()
+    })
+
+    // it('handle row clicked', () => {
+    //     const wrapper = shallow(<Category />); 
+    //     wrapper.instance().handleRowClicked(event)
+    // })
+
+    // it('edit clicked', () => {
+    //     const wrapper = shallow(<Category />); 
+    //     wrapper.instance().editClicked(event)
+    // })
 });
