@@ -7,7 +7,7 @@ class EditCategory extends Component {
     constructor(){
         super();
         this.state = {
-            catData: {category: '', category_id: ''},
+            catData: {name: '', category_id: ''},
             edit_category_array: []
         }
     }
@@ -16,7 +16,7 @@ class EditCategory extends Component {
     updateCategory = (event) => {
         event.preventDefault();
         const {catData} = this.state;
-        axios.put(`${BASE_URL}categories/${this.getCategoryId()}`, {name: catData.category}, 
+        axios.put(`${BASE_URL}categories/${catData.category_id}`, {name: catData.category}, 
         {headers: {Authorization: AuthToken}})
         .then(response => {
             alert('Success '+ response.data.message);
@@ -27,20 +27,13 @@ class EditCategory extends Component {
         });
     }
 
-    // function that gets category id from url
-    getCategoryId(){
-        return this.props.match.params.id;
-    }
-
     // life cycle method that loads default state of components
     componentDidMount(){
-        axios.get(`${BASE_URL}categories/${this.getCategoryId()}`, {headers: {Authorization: AuthToken}})
-        .then(response => {
-            this.setState({edit_category_array: response.data})
-        })
-        .catch(error => {
-            //console.log(error)
-        });
+        const {name, id } = this.props.match.params;
+        this.setState({catData: {
+            'category': name,
+            'category_id': id
+        }})
     }
 
     // function to handle user input change
@@ -54,7 +47,7 @@ class EditCategory extends Component {
     // function to render jsx
     render(){
                 /* EDIT CATEGORY */
-        const {edit_category_array, category_id} = this.state;
+        const {catData} = this.state;
         return(
             <div>
                 <Navbar />
@@ -65,15 +58,13 @@ class EditCategory extends Component {
                     </div>
                     <div className="modal-body">
                         <form onSubmit={this.updateCategory}>
-                            <div className="input-group">
-                                <span className="input-group-addon"><i className="glyphicon glyphicon-plus"></i></span>                                        
-                                <select className="form-control" id="category_id" onChange={this.handleChange} value={category_id}  required>
-                                    <option value={0}>{edit_category_array.name}</option>      
-                                </select>
+                            <div className="input-group">                                       
+                                <input type="hidden"  id="category_id" value={catData.category_id}/>
                             </div>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-plus"></i></span>
                                 <input type="text" id="category" placeholder="NEW CATEGORY NAME" className="form-control"
+                                value={catData.category}
                                 onChange={this.handleChange} 
                                 required />
                             </div>
