@@ -14,6 +14,9 @@ describe('edit recipe tests', () => {
     const event={
         target:{
             value:{}
+        },
+        preventDefault: () => {
+
         }
     }
     it('has divs', () => {
@@ -68,13 +71,23 @@ describe('edit recipe tests', () => {
         wrapper.instance().componentDidMount()
     })
 
-    it('gets id', () => {
+    it('gets recipe id', () => {
         const wrapper = shallow(<EditRecipe {...props}/>); 
         wrapper.instance().getId()
+    })
+
+    it('gets category id', () => {
+        const wrapper = shallow(<EditRecipe {...props}/>); 
+        wrapper.instance().getCategoryId()
     })
 
     it('handle change', () => {
         const wrapper = shallow(<EditRecipe {...props}/>); 
         wrapper.instance().handleChange(event)
+    })
+
+    it('handle submit', () => {
+        const wrapper = shallow(<EditRecipe {...props}/>); 
+        wrapper.instance().handleSubmit(event)
     })
 })
