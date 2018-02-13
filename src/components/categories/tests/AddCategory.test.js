@@ -6,6 +6,9 @@ describe('These are add category tests', () =>{
     const event={
         target:{
             value:{}
+        },
+        preventDefault: () => {
+
         }
     }
     it('renders without crashing', () => {
@@ -56,6 +59,11 @@ describe('These are add category tests', () =>{
     it('handle category name changed', () => {
         const wrapper = shallow(<AddCategory />); 
         wrapper.instance().handleChange(event)
+    })
+
+    it('submit form', () => {
+        const wrapper = shallow(<AddCategory />); 
+        wrapper.instance().submitAddCategoryForm(event)
     })
 
 });
