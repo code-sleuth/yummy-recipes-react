@@ -40,8 +40,8 @@ class LoginForm extends Component {
             window.location.reload();
           })
           .catch(error => {
-            localStorage.setItem('errorMessage', error.response.data.message);
-            window.location.reload()
+            // localStorage.setItem('errorMessage', error.response.data.message);
+            // window.location.reload()
           });
     }
 
