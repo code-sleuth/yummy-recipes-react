@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {BASE_URL, AuthToken} from '../../utils/Constants'; 
 import Navbar from '../common/Navbar';
+import update from 'react-addons-update';
 class EditRecipe extends Component{
     constructor(){
         super();
         this.state = {
-            category_array: [],
-            recipe_array: [],
             recData:{name: '',
             details: '',
             ingredients: ''},
@@ -17,12 +16,13 @@ class EditRecipe extends Component{
 
     // life cycle function that sets the default state of the component
     componentDidMount(){
-        axios.get(`${BASE_URL}recipes/${this.getId()}`, {headers: {Authorization: AuthToken}})
-        .then(response => {
-            this.setState({recipe_array: response.data});
-        })
-        .catch(error => {
-            alert('failed to load edit recipes: ' + error);
+        const {details, ingredients, name} = this.props.match.params;
+        this.setState({
+            recData: {
+                'name': name,
+                'details': details,
+                'ingredients': ingredients
+            }
         })
     }
 
@@ -47,7 +47,7 @@ class EditRecipe extends Component{
         {headers: {Authorization: AuthToken}})
         .then(response => {
             alert('Success');
-            window.location.reload();
+            this.props.history.push('/recipe/'+this.getCategoryId())
         })
         .catch(error => {
             alert(error)
@@ -56,12 +56,16 @@ class EditRecipe extends Component{
 
     // function to get category id from url
     getId(){
-        return this.props.match.params.id
+        return this.props.match.params.recipe_id
+    }
+
+    getCategoryId(){
+        return this.props.match.params.category_id
     }
 
     // function to handle jsx
     render(){
-        const {recipe_array} = this.state;
+        const {recData} = this.state;
             return(
                 <div>
                     <Navbar />
@@ -74,19 +78,22 @@ class EditRecipe extends Component{
                             <form onSubmit={this.handleSubmit} >
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-pencil"></i></span>
-                                    <input type="text" placeholder={"OLD RECIPE NAME: "+recipe_array.name} className="form-control" id="name"
+                                    <input type="text" value={recData.name} className="form-control" id="name"
+                            
                                     onChange={this.handleChange}
                                     required />
                                 </div>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-list-alt"></i></span>
-                                    <textarea type="text" id="details" placeholder={"OLD DETAILS: "+recipe_array.details} className="form-control"
+                                    <textarea type="text" id="details" value={recData.details} className="form-control"
+                                    
                                     onChange={this.handleChange}
                                     required></textarea>
                                 </div>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-glass"></i></span>
-                                    <textarea type="text" id="ingredients" placeholder={"OLD INGREDIENTS: "+recipe_array.ingredients} className="form-control"
+                                    <textarea type="text" id="ingredients" className="form-control"
+                                    value={recData.ingredients}
                                     onChange={this.handleChange}
                                     required></textarea>
                                 </div>
