@@ -7,12 +7,14 @@ class User extends Component {
     constructor(){
         super();
         this.state = {
-            user_details_array: [],
-            username: '',
-            email: '',
-            fullname: '',
-            old_password: '',
-            new_password: ''
+            userData:{
+                username: '',
+                email: '',
+                fullname: '',
+                old_password: '',
+                new_password: '',
+                id: ''
+            }
         }
     }
 
@@ -20,7 +22,13 @@ class User extends Component {
     default(){
         axios.get(BASE_URL+'users/info', {headers: {Authorization: AuthToken}})
         .then(response => {
-            this.setState({user_details_array: response.data});
+            this.setState({userData: {
+                'username': response.data.username,
+                'email': response.data.email,
+                'fullname': response.data.fullname,
+                'id': response.data.id
+                }
+            });
         })
         .catch(error => {
             alert('user error: ' + error);
@@ -32,31 +40,24 @@ class User extends Component {
         this.default()
     }
 
-    // function to handle fullname input changed
-    handleFullnameChanged = (event) => {
-        this.setState({fullname: event.target.value});
-    }
-
-    // function to handle old password input changed
-    handleOldPasswordChanged = (event) => {
-        this.setState({old_password: event.target.value});
-    }
-
-    // function to handle  new password input changed
-    handleNewPasswordChanged = (event) => {
-        this.setState({new_password: event.target.value});
+    // function to handle user input change
+    handleChange = (event) => {
+        const field = event.target.id
+        let userData = this.state.userData
+        userData[field] = event.target.value
+        this.setState({ userData })
     }
     
     // function to handle submited user data
     handleSubmit = (event) => {
         event.preventDefault();
-        const {username, fullname, email, old_password, new_password, user_details_array} = this.state;
-        axios.put(`${BASE_URL}users/${user_details_array.id}`, {
-            username: username,
-            fullname: fullname,
-            email: email,
-            old_password: old_password,
-            new_password: new_password
+        const {userData} = this.state;
+        axios.put(`${BASE_URL}users/${userData.id}`, {
+            username: userData.username,
+            fullname: userData.fullname,
+            email: userData.email,
+            old_password: userData.old_password,
+            new_password: userData.new_password
         },
         {headers: {Authorization: AuthToken}})
         .then(response =>{
@@ -70,7 +71,7 @@ class User extends Component {
 
     // function to render jsx
     render(){
-        const {user_details_array} = this.state;
+        const {userData} = this.state;
         return(
             <div>
             <Navbar />
@@ -83,20 +84,21 @@ class User extends Component {
                             <form onSubmit={this.handleSubmit}>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
-                                    <input type="text" name="fullname" placeholder={user_details_array.fullname + " " + "[FULLNAME]"} className="form-control"
-                                    onChange={this.handleFullnameChanged}
+                                    <input type="text" id="fullname" className="form-control"
+                                    value={userData.fullname}
+                                    onChange={this.handleChange}
                                     required/>
                                 </div>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-lock"></i></span>
-                                    <input type="password" name="password" placeholder="OLD PASSWORD" className="form-control"
-                                    onChange={this.handleOldPasswordChanged}
+                                    <input type="password" id="password" placeholder="OLD PASSWORD" className="form-control"
+                                    onChange={this.handleChange}
                                     required/>
                                 </div>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-lock"></i></span>
-                                    <input type="password" name="new_password" placeholder="NEW PASSWORD" className="form-control"
-                                    onChange={this.handleNewPasswordChanged}
+                                    <input type="password" id="new_password" placeholder="NEW PASSWORD" className="form-control"
+                                    onChange={this.handleChange}
                                     required/>
                                 </div>
                                 <br />
