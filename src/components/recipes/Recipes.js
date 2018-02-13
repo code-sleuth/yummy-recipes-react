@@ -71,7 +71,8 @@ class Recipes extends Component {
     }
 
     editClicked = (event) => {
-        this.props.history.push('/edit_recipe/'+event.target.id);
+        const {name, details, ingredients} = this.state.recipes[0] 
+        this.props.history.push('/edit_recipe/'+this.state.id+'/'+event.target.id+'/'+name+'/'+details+'/'+ingredients);
     }
 
     deleteClicked = (event) => {
