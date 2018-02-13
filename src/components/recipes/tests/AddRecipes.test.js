@@ -13,6 +13,9 @@ describe('Add recipe tests', () => {
     const event={
         target:{
             value:{}
+        },
+        preventDefault: () => {
+
         }
     }
     it('has divs', () => {
@@ -69,5 +72,10 @@ describe('Add recipe tests', () => {
     it('handle change', () => {
         const wrapper = shallow(<AddRecipe {...props}/>); 
         wrapper.instance().handleChange(event)
+    })
+
+    it('handle submit', () => {
+        const wrapper = shallow(<AddRecipe {...props}/>); 
+        wrapper.instance().handleSubmit(event)
     })
 })
