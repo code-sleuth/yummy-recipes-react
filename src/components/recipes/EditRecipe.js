@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {BASE_URL, AuthToken} from '../../utils/Constants'; 
 import Navbar from '../common/Navbar';
-import update from 'react-addons-update';
 class EditRecipe extends Component{
     constructor(){
         super();
