@@ -2,13 +2,15 @@ import React, {Component}  from 'react';
 import axios from 'axios';
 import {BASE_URL, AuthToken} from '../../utils/Constants';
 import Navbar from '../common/Navbar';
+import EditCategory from './EditCategory';
 class Category extends Component {
     constructor(props){
         super(props);
         this.state = {
             categories: [],
             per_page: '',
-            total_items_returned: ''
+            total_items_returned: '',
+            
         }
     }
     // function called when changing page
@@ -27,6 +29,11 @@ class Category extends Component {
     // in turn it gets the page id and passes it ti pageChanged function
     handleClick = (event) => {
         this.pageChanged(event.target.id)
+    }
+
+    // function called when row is clicked
+    handleRowClicked = (event) => {
+        this.props.history.push('/recipe/'+event.target.id)    
     }
 
     // life cycle function for when component loads for the first time
@@ -57,20 +64,15 @@ class Category extends Component {
         axios.get(`${BASE_URL}categories/search?q=${event.target.value}`, {headers: {Authorization: AuthToken}})
         .then(response => {
             this.setState({categories: response.data})
-            const {categories, per_page, total_items_returned} = this.state
+            const {categories, per_page, total_items_returned, term} = this.state
             this.setState({per_page: categories[0].per_page})
             this.setState({total_items_returned: categories[0].total_items_returned})
         })
         .catch(error => {
             this.setState({categories: []})
-            alert('Search item does not exist');
-            this.default()
+            //alert('Search item does not exist');
+            //this.default()
         });
-    }
-
-    // function called when row is clicked
-    handleRowClicked = (event) => {
-        this.props.history.push('/recipe/'+event.target.id)    
     }
 
     // function called when add button is clicked
@@ -80,7 +82,7 @@ class Category extends Component {
 
     // function called when the edit button is clicked
     editClicked = (event) => {
-        this.props.history.push('/edit_categories/'+event.target.id);
+        this.props.history.push('/edit_categories/'+event.target.id+'/'+event.target.name);
     }
 
     // function called when the delete button is clicked
@@ -97,7 +99,7 @@ class Category extends Component {
       
     // function that renders the entie component.
     render(){
-        const {categories, per_page, total_items_returned} = this.state;
+        const {categories, per_page, total_items_returned, term} = this.state;
         if (categories.length > 0){
             const cat = categories.map((category) => {
             return(
@@ -139,7 +141,7 @@ class Category extends Component {
                         <input type="submit" value="ADD" className="btn btn-warning" onClick={this.addClicked} />
                     </div>
                     <div className="search-bar">
-                    <input placeholder="SEARCH" onChange={this.OnInputChange} />
+                    <input placeholder="SEARCH" onChange={this.OnInputChange}  />
                     </div>                             
                     <table className="table table-hover">
                         <thead>
@@ -164,9 +166,12 @@ class Category extends Component {
         );
     } else {
         return(
-            <div className="container">
-                <p className="text-center"> User has no Registered Categories</p>
-                <input type="submit" value="ADD" className="center-block btn-warning btn-lg" onClick={this.addClicked} />
+            <div>
+                <Navbar />  
+                <div className="container">
+                    <p className="text-center"> User has no Registered Categories OR Search not found</p>
+                    <input type="submit" value="ADD" className="center-block btn-warning btn-lg" onClick={this.addClicked} />
+                </div>
             </div>
         )
     }
