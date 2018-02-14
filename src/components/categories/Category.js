@@ -55,6 +55,11 @@ class Category extends Component {
         });
     }
 
+    callDefault = (event) =>{
+        event.preventDefault()
+        this.default()
+    }
+
     // function called every time user changes input in the search bar 
     OnInputChange = (event) => {
         if(!event.target.value){
@@ -165,12 +170,23 @@ class Category extends Component {
             </div>
         );
     } else {
+        this.setState()
         return(
-            <div>
+            <div> 
                 <Navbar />  
                 <div className="container">
                     <p className="text-center"> User has no Registered Categories OR Search not found</p>
-                    <input type="submit" value="ADD" className="center-block btn-warning btn-lg" onClick={this.addClicked} />
+                </div>
+                <div className="text-center">
+                    <ul className="pagination">
+                        <li><a onClick={this.addClicked}>ADD NEW CATEGORY</a></li>
+                    </ul>
+                </div>
+                <br />
+                <div className="text-center">
+                    <ul className="pagination">
+                        <li><a onClick={this.callDefault}>BACK</a></li>
+                    </ul>
                 </div>
             </div>
         )
