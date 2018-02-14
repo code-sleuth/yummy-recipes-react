@@ -19,7 +19,7 @@ class EditCategory extends Component {
         axios.put(`${BASE_URL}categories/${catData.category_id}`, {name: catData.category}, 
         {headers: {Authorization: AuthToken}})
         .then(response => {
-            alert('Success '+ response.data.message);
+            alert('Success ');
             this.props.history.push('/categories')
         })
         .catch(error => {
