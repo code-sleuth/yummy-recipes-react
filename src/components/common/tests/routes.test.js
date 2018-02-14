@@ -19,7 +19,7 @@ describe('routes tests', () => {
     })
     it('has public routes', () => {
         const wrapper = shallow(<Routes />)
-        expect(wrapper.find('Route').length).toBe(2)
+        expect(wrapper.find('Route').length).toBe(3)
     })
 
 })
