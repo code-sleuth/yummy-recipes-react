@@ -35,7 +35,7 @@ class SignupPage extends Component {
             fullname: userData.fullname,
             email: userData.email,
             password: userData.password,
-        })
+        },{mode: 'cors'})
         .then(response => {
             alert("Response: " + response.data.message)
             this.props.history.push('/login')
