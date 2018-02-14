@@ -14,7 +14,7 @@ import AddRecipe from '../recipes/AddRecipe';
 const Routes = () =>(
     <div>
         <Switch>
-            {/* <Route exact path="/" component={Homepage} /> */}
+            <Route exact path="/" component={LoginForm} />
             <Route exact path="/login"  component={LoginForm} />
             <Route exact path="/signup"  component={SignupPage} />
             <PrivateRoute path="/recipe/:id" component={Dashboard} />
