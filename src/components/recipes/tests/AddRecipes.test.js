@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import AddRecipe from './AddRecipe';
+import AddRecipe from '../AddRecipe';
 
 describe('Add recipe tests', () => {
     const props = {
@@ -13,6 +13,9 @@ describe('Add recipe tests', () => {
     const event={
         target:{
             value:{}
+        },
+        preventDefault: () => {
+
         }
     }
     it('has divs', () => {
@@ -66,23 +69,13 @@ describe('Add recipe tests', () => {
         wrapper.instance().componentDidMount()
     })
 
-    it('handles select changed', () => {
+    it('handle change', () => {
         const wrapper = shallow(<AddRecipe {...props}/>); 
-        wrapper.instance().handleSelectChanged(event)
+        wrapper.instance().handleChange(event)
     })
 
-    it('handles recipe name changed', () => {
+    it('handle submit', () => {
         const wrapper = shallow(<AddRecipe {...props}/>); 
-        wrapper.instance().handleRecipeNameChanged(event)
-    })
-
-    it('handles details changed', () => {
-        const wrapper = shallow(<AddRecipe {...props}/>); 
-        wrapper.instance().handleDetailsChanged(event)
-    })
-
-    it('handles ingredients changed', () => {
-        const wrapper = shallow(<AddRecipe {...props}/>); 
-        wrapper.instance().handleIngredientsChanged(event)
+        wrapper.instance().handleSubmit(event)
     })
 })

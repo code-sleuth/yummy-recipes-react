@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import Routes from './routes';
+import Routes from '../routes';
 
 describe('routes tests', () => {
     it('has div', () => {
@@ -19,7 +19,7 @@ describe('routes tests', () => {
     })
     it('has public routes', () => {
         const wrapper = shallow(<Routes />)
-        expect(wrapper.find('Route').length).toBe(2)
+        expect(wrapper.find('Route').length).toBe(3)
     })
 
 })

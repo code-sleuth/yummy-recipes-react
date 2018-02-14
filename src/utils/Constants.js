@@ -1,5 +1,5 @@
 import React from 'react';
-export const BASE_URL = 'http://127.0.0.1:5000/';
+export const BASE_URL = 'https://yummy-recipes-api-pro.herokuapp.com/';
 export const LOGIN_URL = 'auth/login';
 export const REGISTER_URL = 'auth/register';
 export const Authenticated = isAuthenticated();

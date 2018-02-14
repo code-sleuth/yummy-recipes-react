@@ -7,16 +7,16 @@ class AddCategory extends Component{
     constructor(){
         super();
         this.state = {
-            category: "",
+            catData:{category: ""},
         }
     }
 
     // Function to push form input to api
     submitAddCategoryForm = (event) => {
         event.preventDefault();
-        const {category} = this.state;
+        const {catData} = this.state;
         axios.post(BASE_URL+'categories', {
-            name: category,
+            name: catData.category,
         }, {headers: {Authorization: AuthToken}})
         .then(response => {
             alert('Category Added Successfully');
@@ -28,18 +28,15 @@ class AddCategory extends Component{
         //this.props.history.push('/categories')
     }
 
-    //function to handle user name change input
-    handleCategoryNameChanged = (event) => {
-        this.setState({category: event.target.value})
-    }
-
-    //function top reload page
-    reloadPage(){
-        window.location.reload();
+    // function to handle user input change
+    handleChange = (event) => {
+        const field = event.target.id
+        let catData = this.state.catData
+        catData[field] = event.target.value
+        this.setState({ catData })
     }
 
     render(){
-        
         return(
             /* ADD CATEGORY */
             <div>
@@ -53,8 +50,8 @@ class AddCategory extends Component{
                         <form onSubmit={this.submitAddCategoryForm}>
                             <div className="input-group">
                                 <span className="input-group-addon"><i className="glyphicon glyphicon-plus"></i></span>
-                                <input type="text" name="category" placeholder="CATEGORY" className="form-control"
-                                onChange={this.handleCategoryNameChanged}
+                                <input type="text" id="category" placeholder="CATEGORY" className="form-control"
+                                onChange={this.handleChange}
                                 required />
                             </div>
                             <br />

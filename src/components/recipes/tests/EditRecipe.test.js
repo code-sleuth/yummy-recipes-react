@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import EditRecipe from './EditRecipe';
+import EditRecipe from '../EditRecipe';
 
 
 describe('edit recipe tests', () => {
@@ -14,6 +14,9 @@ describe('edit recipe tests', () => {
     const event={
         target:{
             value:{}
+        },
+        preventDefault: () => {
+
         }
     }
     it('has divs', () => {
@@ -68,33 +71,23 @@ describe('edit recipe tests', () => {
         wrapper.instance().componentDidMount()
     })
 
-    it('gets id', () => {
+    it('gets recipe id', () => {
         const wrapper = shallow(<EditRecipe {...props}/>); 
         wrapper.instance().getId()
     })
 
-    it('handles recipe changed', () => {
+    it('gets category id', () => {
         const wrapper = shallow(<EditRecipe {...props}/>); 
-        wrapper.instance().handleRecipeChanged(event)
+        wrapper.instance().getCategoryId()
     })
 
-    it('handles category changed', () => {
+    it('handle change', () => {
         const wrapper = shallow(<EditRecipe {...props}/>); 
-        wrapper.instance().handleCategoryChanged(event)
+        wrapper.instance().handleChange(event)
     })
 
-    it('handles recipe name changed', () => {
+    it('handle submit', () => {
         const wrapper = shallow(<EditRecipe {...props}/>); 
-        wrapper.instance().handleRecipeNameChanged(event)
-    })
-
-    it('handles recipe details changed', () => {
-        const wrapper = shallow(<EditRecipe {...props}/>); 
-        wrapper.instance().handleRecipeDetailsChanged(event)
-    })
-
-    it('handles recipe ingredients changed', () => {
-        const wrapper = shallow(<EditRecipe {...props}/>); 
-        wrapper.instance().handleRecipeIngredientsChanged(event)
+        wrapper.instance().handleSubmit(event)
     })
 })

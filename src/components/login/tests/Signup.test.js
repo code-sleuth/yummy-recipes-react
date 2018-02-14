@@ -1,11 +1,14 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import Signup from './Signup';
+import Signup from '../Signup';
 
 describe('signup tests', () => {
     const event={
         target:{
             value:{}
+        },
+        preventDefault: () => {
+
         }
     }
     it('has divs', () => {
@@ -47,24 +50,14 @@ describe('signup tests', () => {
         expect(wrapper.find('br').length).toBe(1)
     })
 
-    it('handles username changed', () => {
+    it('handles input change', () => {
         const wrapper = shallow(<Signup />); 
-        wrapper.instance().handleUsernameChanged(event)
+        wrapper.instance().handleChange(event)
     })
 
-    it('handles fullname changed', () => {
+    it('handles submit', () => {
         const wrapper = shallow(<Signup />); 
-        wrapper.instance().handleFullnameChanged(event)
-    })
-
-    it('handles password changed', () => {
-        const wrapper = shallow(<Signup />); 
-        wrapper.instance().handlePasswordChanged(event)
-    })
-
-    it('handles confirm password changed', () => {
-        const wrapper = shallow(<Signup />); 
-        wrapper.instance().handleConfirmPasswordChanged(event)
+        wrapper.instance().submitForm(event)
     })
             
 })

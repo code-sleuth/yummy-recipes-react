@@ -10,7 +10,6 @@ class Recipes extends Component {
             recipes: [],
             per_page: '',
             total_items_returned: '',
-            term: '',
             id: this.props.id
         }
     }
@@ -71,7 +70,8 @@ class Recipes extends Component {
     }
 
     editClicked = (event) => {
-        this.props.history.push('/edit_recipe/'+event.target.id);
+        const {name, details, ingredients} = this.state.recipes[0] 
+        this.props.history.push('/edit_recipe/'+this.state.id+'/'+event.target.id+'/'+name+'/'+details+'/'+ingredients);
     }
 
     deleteClicked = (event) => {
@@ -84,6 +84,11 @@ class Recipes extends Component {
         .catch(error => {
             alert('Delete recipe error: ' + error);
         })
+    }
+
+    callDefault = (event) =>{
+        event.preventDefault()
+        this.default()
     }
 
     render(){
@@ -127,7 +132,7 @@ class Recipes extends Component {
                     <input type="submit" value="ADD" className="btn btn-warning" onClick={this.addClicked} />
                 </div>
                 <div className="search-bar">
-                <input onChange={this.OnInputChange} />
+                <input placeholder="SEARCH" onChange={this.OnInputChange} />
                 </div>                             
                 <table className="table table-hover">
                     <thead>
@@ -151,10 +156,23 @@ class Recipes extends Component {
             </div>
         );
     } else {
+        this.setState()
         return(
-            <div className="container">
-                <p className="text-center"> User has no Recipes for this Category</p>
-                <input type="submit" value="ADD" className="center-block btn-warning btn-lg" onClick={this.addClicked}/>
+            <div>
+                <div className="container">
+                    <p className="text-center"> User has no Registered Recipes OR Search not found</p>
+                </div>
+                <div className="text-center">
+                    <ul className="pagination">
+                        <li><a onClick={this.addClicked}>ADD NEW RECIPE</a></li>
+                    </ul>
+                </div>
+                <br />
+                <div className="text-center">
+                    <ul className="pagination">
+                        <li><a onClick={this.callDefault}>BACK</a></li>
+                    </ul>
+                </div>
             </div>
         )   
     }

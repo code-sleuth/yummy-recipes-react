@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Info from './Info';
+import Info from '../Info';
 
 describe('Info tests', () => {
     const year = (new Date()).getFullYear();

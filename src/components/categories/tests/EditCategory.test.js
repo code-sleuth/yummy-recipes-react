@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EditCategory from './EditCategory';
+import EditCategory from '../EditCategory';
 
 describe('these are edit category component tests', () => {
     const props={
@@ -22,17 +22,13 @@ describe('these are edit category component tests', () => {
         const wrapper = shallow(<EditCategory {...props}/>); 
         wrapper.instance().componentDidMount()
     })
-    it('getCategoryId', () => {
-        const wrapper = shallow(<EditCategory {...props}/>); 
-        wrapper.instance().getCategoryId()
-    })
+    // it('getCategoryId', () => {
+    //     const wrapper = shallow(<EditCategory {...props}/>); 
+    //     wrapper.instance().getCategoryId()
+    // })
 
-    it('handles category edited', () => {
+    it('handles input change', () => {
         const wrapper = shallow(<EditCategory {...props}/>); 
-        wrapper.instance().handleCategroyEdited(event)
-    })
-    it('handles select changed', () => {
-        const wrapper = shallow(<EditCategory {...props}/>); 
-        wrapper.instance().handleSelectChanged(event)
+        wrapper.instance().handleChange(event)
     })
 });

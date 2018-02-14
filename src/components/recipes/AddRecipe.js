@@ -8,9 +8,9 @@ class AddRecipe extends Component{
         super(props);
         this.state = {
             category_array: [],
-            name: '',
+            recData:{name: '',
             details: '',
-            ingredients: '',
+            ingredients: ''},
             category_id: '',
             id: this.props.id
         }
@@ -18,6 +18,14 @@ class AddRecipe extends Component{
     // function to get recipe id from url
     getRecipeId(){
         return this.props.match.params.id;
+    }
+
+    //function to handle user input
+    handleChange = (event) => {
+        const field = event.target.id
+        let recData = this.state.recData
+        recData[field] = event.target.value
+        this.setState({ recData })
     }
     
     // life cycle method to load default state of components
@@ -35,13 +43,13 @@ class AddRecipe extends Component{
     // function to handle submited form data
     handleSubmit = (event) => {
         event.preventDefault();
-        const { category_id, name, details, ingredients} = this.state;
+        const { category_id, recData} = this.state;
         axios.post(BASE_URL+'recipes',
          {
             category_id: category_id,
-            name: name,
-            details: details,
-            ingredients: ingredients
+            name: recData.name,
+            details: recData.details,
+            ingredients: recData.ingredients
         },
         {headers: {Authorization: AuthToken}})
         .then(response => {
@@ -52,26 +60,6 @@ class AddRecipe extends Component{
             alert(error);
         })
 
-    }
-
-    // function to handle select input changed
-    handleSelectChanged = (event) => {
-        this.setState({category_id: event.target.value});
-    }
-
-    // function to handle recipe name input change
-    handleRecipeNameChanged = (event) => {
-        this.setState({name: event.target.value});
-    }
-
-    // function to handle details input changed
-    handleDetailsChanged = (event) => {
-        this.setState({details: event.target.value});
-    }
-
-    // function to handle ingredients input changed
-    handleIngredientsChanged = (event) => {
-        this.setState({ingredients: event.target.value});
     }
 
     // function to render jsx
@@ -89,26 +77,26 @@ class AddRecipe extends Component{
                             <form onSubmit={this.handleSubmit}>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-plus"></i></span>                                        
-                                    <select className="form-control" name="category" value={category_id} required>
+                                    <select className="form-control" id="category_id" value={category_id} required>
                                     <option>{"CATEGORY NAME: "+category_array.name}</option>
                                     </select>
                                 </div>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-pencil"></i></span>
-                                    <input type="text" name="recipename" placeholder="RECIPE NAME" className="form-control"
-                                        onChange={this.handleRecipeNameChanged}
+                                    <input type="text" id="name" placeholder="RECIPE NAME" className="form-control"
+                                        onChange={this.handleChange}
                                         required />
                                 </div>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-list-alt"></i></span>
-                                    <textarea type="text" name="description" placeholder="RECIPE DESCRIPTION" className="form-control" 
-                                    onChange={this.handleDetailsChanged}
+                                    <textarea type="text" id="details" placeholder="RECIPE DESCRIPTION" className="form-control" 
+                                    onChange={this.handleChange}
                                     required></textarea>
                                 </div>
                                 <div className="input-group">
                                     <span className="input-group-addon"><i className="glyphicon glyphicon-glass"></i></span>
-                                    <textarea type="text" name="ingredients" placeholder="RECIPE INGREDIENTS" className="form-control"
-                                    onChange={this.handleIngredientsChanged}
+                                    <textarea type="text" id="ingredients" placeholder="RECIPE INGREDIENTS" className="form-control"
+                                    onChange={this.handleChange}
                                     required></textarea>
                                 </div>
                                 <br />

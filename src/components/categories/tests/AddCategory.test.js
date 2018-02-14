@@ -1,11 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import AddCategory from './AddCategory';
+import AddCategory from '../AddCategory';
 
 describe('These are add category tests', () =>{
     const event={
         target:{
             value:{}
+        },
+        preventDefault: () => {
+
         }
     }
     it('renders without crashing', () => {
@@ -53,14 +56,14 @@ describe('These are add category tests', () =>{
         expect(wrapper.find('Navbar').length).toBe(1)
     });
 
-    it('reload', () => {
-        const wrapper = shallow(<AddCategory />); 
-        wrapper.instance().reloadPage()
-    })
-
     it('handle category name changed', () => {
         const wrapper = shallow(<AddCategory />); 
-        wrapper.instance().handleCategoryNameChanged(event)
+        wrapper.instance().handleChange(event)
+    })
+
+    it('submit form', () => {
+        const wrapper = shallow(<AddCategory />); 
+        wrapper.instance().submitAddCategoryForm(event)
     })
 
 });

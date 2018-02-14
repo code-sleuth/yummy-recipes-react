@@ -14,14 +14,14 @@ import AddRecipe from '../recipes/AddRecipe';
 const Routes = () =>(
     <div>
         <Switch>
-            {/* <Route exact path="/" component={Homepage} /> */}
+            <Route exact path="/" component={LoginForm} />
             <Route exact path="/login"  component={LoginForm} />
             <Route exact path="/signup"  component={SignupPage} />
             <PrivateRoute path="/recipe/:id" component={Dashboard} />
             <PrivateRoute path="/add_recipe/:id" component={AddRecipe} />
-            <PrivateRoute path="/edit_recipe/:id" component={EditRecipe} />
+            <PrivateRoute path="/edit_recipe/:category_id/:recipe_id/:name/:details/:ingredients" component={EditRecipe} />
             <PrivateRoute path="/categories" component={Category} /> 
-            <PrivateRoute path="/edit_categories/:id" component={EditCategory} /> 
+            <PrivateRoute path="/edit_categories/:id/:name" component={EditCategory} /> 
             <PrivateRoute exact path="/add_categories" component={AddCategory} /> 
             <PrivateRoute exact path="/user" component={User} />
         </Switch>

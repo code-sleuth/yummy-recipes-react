@@ -1,11 +1,14 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import LoginForm from './LoginForm';
+import LoginForm from '../LoginForm';
 
 describe('Login form tests', () => {
     const event={
         target:{
             value:{}
+        },
+        preventDefault: () => {
+
         }
     }
     it('has divs', () => {
@@ -53,12 +56,13 @@ describe('Login form tests', () => {
         expect(wrapper.find('p').length).toBe(1)
     })
 
-    it('handles username changed', () => {
+    it('handles input changed', () => {
         const wrapper = shallow(<LoginForm />); 
-        wrapper.instance().handleUsernameChanged(event)
+        wrapper.instance().handleChange(event)
     })
-    it('handles password changed', () => {
+
+    it('handle  submit', () => {
         const wrapper = shallow(<LoginForm />); 
-        wrapper.instance().handlePasswordChanged(event)
+        wrapper.instance().submitForm(event)
     })
 })
